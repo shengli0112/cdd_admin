@@ -1,12 +1,12 @@
 import fetch from 'utils/fetch';
 
-export function loginByEmail(email, password) {
+export function loginByEmail(username, password) {
   const data = {
-    email,
+    username,
     password
   };
   return fetch({
-    url: '/login/loginbyemail',
+    url: '/user/login',
     method: 'post',
     data
   });
