@@ -7,8 +7,8 @@ const user = {
     status: '',
     code: '',
     token: getToken(),
-    name: '',
-    avatar: '',
+    account: '',
+    portrait: '',
     introduction: '',
     roles: [],
     setting: {
@@ -32,11 +32,11 @@ const user = {
     SET_STATUS: (state, status) => {
       state.status = status;
     },
-    SET_NAME: (state, name) => {
-      state.name = name;
+    SET_ACCOUNT: (state, account) => {
+      state.account = account;
     },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar;
+    SET_PORTRAIT: (state, portrait) => {
+      state.portrait = portrait;
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles;
@@ -55,8 +55,9 @@ const user = {
       const email = userInfo.email.trim();
       return new Promise((resolve, reject) => {
         loginByEmail(email, userInfo.password).then(response => {
-          const data = response.data;
-          setToken(response.data.token);
+          alert(response.data.data.token)
+          const data = response.data.data;
+          setToken(response.data.data.token);
           commit('SET_TOKEN', data.token);
           resolve();
         }).catch(error => {
@@ -69,11 +70,11 @@ const user = {
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(response => {
-          const data = response.data;
+          const data = response.data.data;
           commit('SET_ROLES', data.role);
-          commit('SET_NAME', data.name);
-          commit('SET_AVATAR', data.avatar);
-          commit('SET_INTRODUCTION', data.introduction);
+          commit('SET_ACCOUNT', data.account);
+          commit('SET_PORTRAIT', data.portrait);
+          // commit('SET_INTRODUCTION', data.introduction);
           resolve(response);
         }).catch(error => {
           reject(error);
