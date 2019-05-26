@@ -15,8 +15,8 @@ Mock.mock(/\/article\/list/, 'get', articleAPI.getList);
 Mock.mock(/\/article\/detail/, 'get', articleAPI.getArticle);
 
 // // table example相关
-Mock.mock(/\/article_table\/list/, 'get', article_tableAPI.getList);
-Mock.mock(/\/article_table\/p/, 'get', article_tableAPI.getPv);
+// Mock.mock(/\/article_table\/list/, 'get', article_tableAPI.getList);
+// Mock.mock(/\/article_table\/p/, 'get', article_tableAPI.getPv);
 
 // // 搜索相关
 Mock.mock(/\/search\/user/, 'get', remoteSearchAPI.searchUser);

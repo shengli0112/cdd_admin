@@ -46,6 +46,16 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/admin',
+    component: Layout,
+    redirect: '/user/',
+    name: '店长审核',
+    icon: 'zonghe',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('example/table/table'), name: '店长审核' }]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',

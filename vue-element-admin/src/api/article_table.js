@@ -2,7 +2,7 @@ import fetch from 'utils/fetch';
 
 export function fetchList(query) {
   return fetch({
-    url: '/article_table/list',
+    url: '/broker/brokerList',
     method: 'get',
     params: query
   });
@@ -13,5 +13,18 @@ export function fetchPv(pv) {
     url: '/article_table/pv',
     method: 'get',
     params: { pv }
+  });
+}
+
+export function passAudit(id, userId, applyType) {
+  const data = {
+    id,
+    userId,
+    applyType
+  };
+  return fetch({
+    url: '/broker/passAudit',
+    method: 'post',
+    data
   });
 }
