@@ -56,14 +56,14 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('example/table/table'), name: '店长审核' }]
   },
   {
-    path: '/permission',
+    path: '/house',
     component: Layout,
-    redirect: '/permission/index',
-    name: '权限测试',
-    icon: 'quanxian',
+    redirect: '/house/',
+    name: '房源列表',
+    icon: 'zonghe',
     meta: { role: ['admin'] },
     noDropdown: true,
-    children: [{ path: 'index', component: _import('permission/index'), name: '权限测试页', meta: { role: ['admin'] } }]
+    children: [{ path: 'table', component: _import('house/table/table'), name: '房源列表' }]
   },
   {
     path: '/components',
