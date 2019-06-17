@@ -17,12 +17,57 @@ export function fetchPv1(pv) {
 }
 
 export function deleteHouse(houseId) {
-  // const data = {
-  //   id
-  // };
+  const data = {
+    houseId
+  };
   return fetch({
     url: '/house/deleteHouse',
     method: 'post',
-    params:houseId
+    data
+  });
+}
+
+export function recoverHouse(houseId) {
+  const data = {
+    houseId
+  };
+  return fetch({
+    url: '/house/recoverHouse',
+    method: 'post',
+    data
+  });
+}
+
+export function topHouse(houseId) {
+  const data = {
+    houseId
+  };
+  return fetch({
+    url: '/house/topHouse',
+    method: 'post',
+    data
+  });
+}
+
+export function cityList() {
+  return fetch({
+    url: '/region/findAllCity',
+    method: 'get'
+  });
+}
+
+export function countyList(city) {
+  return fetch({
+    url: '/region/findCountyByCity',
+    method: 'get',
+    params: { city }
+  });
+}
+
+export function townList(county) {
+  return fetch({
+    url: '/region/findTownByCounty',
+    method: 'get',
+    params: { county }
   });
 }

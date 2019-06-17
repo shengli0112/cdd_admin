@@ -66,6 +66,38 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('house/table/table'), name: '房源列表' }]
   },
   {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/',
+    name: '客源管理',
+    icon: 'zonghe',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('user/table/table'), name: '客源列表' }]
+  },
+  {
+    path: '/enterprise',
+    component: Layout,
+    redirect: '/enterprise/',
+    name: '企业圈管理',
+    icon: 'zonghe',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('enterprise/table/table'), name: '企业圈列表' }]
+  },
+  {
+    path: '/park',
+    component: Layout,
+    redirect: '/park/',
+    name: '园区管理',
+    icon: 'zujian',
+    children: [
+      { path: 'lease', component: _import('lease/table/table'), name: '出租园区' },
+      { path: 'sell', component: _import('sell/table/table'), name: '出售园区' },
+
+    ]
+  },
+  /*{
     path: '/components',
     component: Layout,
     redirect: '/components/index',
@@ -165,7 +197,7 @@ export const asyncRouterMap = [
     icon: 'theme',
     noDropdown: true,
     children: [{ path: 'index', component: _import('theme/index'), name: '换肤' }]
-  },
+  },*/
 
   { path: '*', redirect: '/404', hidden: true }
 ];

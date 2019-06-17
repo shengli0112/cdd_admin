@@ -4,25 +4,25 @@
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词" v-model="listQuery.keyword">
       </el-input>
 
-<!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
-<!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
+      <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
-<!--      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">-->
-<!--        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">-->
+      <!--        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
-<!--      <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort" placeholder="排序">-->
-<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort" placeholder="排序">-->
+      <!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-<!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-<!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
-<!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
+      <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
+      <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
+      <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
@@ -39,21 +39,9 @@
         </template>
       </el-table-column>-->
 
-      <el-table-column align="center" label="标题" width="125">
+      <el-table-column align="center" label="园区名" width="125">
         <template scope="scope">
-          <span>{{scope.row.title}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="租售" width="65">
-        <template scope="scope">
-          <span>{{scope.row.houseUseType}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="类型" width="65">
-        <template scope="scope">
-          <span>{{scope.row.houseType}}</span>
+          <span>{{scope.row.parkName}}</span>
         </template>
       </el-table-column>
 
@@ -69,68 +57,75 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="总面积" width="90">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地'">{{scope.row.coverArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房'">{{scope.row.area}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库'">{{scope.row.area}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="使用面积" width="100">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地' && scope.row.useArea != ''">{{scope.row.useArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="楼层" width="65">
-        <template scope="scope">
-          <span>{{scope.row.floor}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="价格" width="120">
-        <template scope="scope">
-          <span v-if="scope.row.houseUseType=='出售'">{{scope.row.sellingPrice}}{{scope.row.priceType}}</span>
-          <span v-if="scope.row.houseUseType=='出租'">{{scope.row.singlePrice}}{{scope.row.priceType}}</span>
-
-        </template>
-      </el-table-column>
-
-     <!-- <el-table-column min-width="80px" label="公司名">
-        <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
-&lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-        </template>
-      </el-table-column>
-
-      <el-table-column width="200px" align="center" label="公司地址">
+      <el-table-column align="center" label="地址" width="120">
         <template scope="scope">
           <span>{{scope.row.address}}</span>
         </template>
-      </el-table-column>;
+      </el-table-column>
 
-
-      <el-table-column width="120px" label="注册日期">
+      <el-table-column align="center" label="总面积" width="90">
         <template scope="scope">
-          <span>{{scope.row.registerDate}}</span>
-&lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
+          <span>{{scope.row.totalArea}}</span>
         </template>
-      </el-table-column>-->
+      </el-table-column>
+
+      <el-table-column align="center" label="单价" width="100">
+        <template scope="scope">
+          <span>{{scope.row.unitPrice}}</span>
+
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="适合行业" width="120">
+        <template scope="scope">
+          <span>{{scope.row.industry}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="标签" width="120">
+        <template scope="scope">
+          <span>{{scope.row.tag}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="园区介绍" width="120">
+        <template scope="scope">
+          <span>{{scope.row.description}}</span>
+        </template>
+      </el-table-column>
+
+      <!-- <el-table-column min-width="80px" label="公司名">
+         <template scope="scope">
+           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
+ &lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
+         </template>
+       </el-table-column>
+
+       <el-table-column width="200px" align="center" label="公司地址">
+         <template scope="scope">
+           <span>{{scope.row.address}}</span>
+         </template>
+       </el-table-column>;
+
+
+       <el-table-column width="120px" label="注册日期">
+         <template scope="scope">
+           <span>{{scope.row.registerDate}}</span>
+ &lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
+         </template>
+       </el-table-column>-->
 
       <el-table-column align="center" label="联系人" width="95">
-      <template scope="scope">
-        <span>{{scope.row.contacts}}</span>
-<!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-      </template>
-    </el-table-column>
+        <template scope="scope">
+          <span>{{scope.row.contacts}}</span>
+          <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="手机号" width="130">
         <template scope="scope">
           <span>{{scope.row.phone}}</span>
-<!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+          <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
         </template>
       </el-table-column>
 
@@ -154,7 +149,7 @@
 
     <div v-show="!listLoading" class="pagination-container">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
-        :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
@@ -170,9 +165,9 @@
 
         <el-form-item label="区域">
           <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity">
-          <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
-          </el-option>
-        </el-select>
+            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
           <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="请选择" @change="selectCounty">
             <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
             </el-option>
@@ -240,15 +235,15 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchHouseList,deleteHouse,recoverHouse,topHouse,cityList,countyList,townList } from 'api/house_table';
+  import { fetchLeaseList,deleteLease,recoverLease,topHouse,cityList,countyList,townList } from 'api/lease_park_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
   const calendarTypeOptions = [
-      { key: 'CN', display_name: '中国' },
-      { key: 'US', display_name: '美国' },
-      { key: 'JP', display_name: '日本' },
-      { key: 'EU', display_name: '欧元区' }
+    { key: 'CN', display_name: '中国' },
+    { key: 'US', display_name: '美国' },
+    { key: 'JP', display_name: '日本' },
+    { key: 'EU', display_name: '欧元区' }
   ];
 
 
@@ -331,8 +326,8 @@
     methods: {
       getList() {
         this.listLoading = true;
-        fetchHouseList(this.listQuery).then(response => {
-          this.list = response.data.data.houseInfoList;
+        fetchLeaseList(this.listQuery).then(response => {
+          this.list = response.data.data.leaseParkList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
@@ -380,12 +375,12 @@
         this.dialogFormVisible = true;
       },
       handleRecover(row) {
-        MessageBox.confirm('您确定恢复该房源么', '确定', {
+        MessageBox.confirm('您确定恢复该园区么', '确定', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          recoverHouse(row.id).then(response => {
+          recoverLease(row.id).then(response => {
             // this.flag = response.data.flag;
             if(response.data.flag  == 1){
               this.$notify({
@@ -420,12 +415,12 @@
         })
       },
       handleDelete(row) {
-        MessageBox.confirm('您确定删除该房源么', '确定删除', {
+        MessageBox.confirm('您确定删除该园区么', '确定删除', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteHouse(row.id).then(response => {
+          deleteLease(row.id).then(response => {
             // this.flag = response.data.flag;
             if(response.data.flag == 1){
               this.$notify({
