@@ -523,13 +523,15 @@
         })
       },
       selectCity(val){
-
+        this.temp.county=''
+        this.temp.town = ''
         this.cityList = []
         this.countyList = []
         this.townList = []
         this.getCityList(val)
       },
       selectCounty(val){
+        this.temp.town = ''
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
