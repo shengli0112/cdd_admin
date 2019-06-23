@@ -39,107 +39,25 @@
         </template>
       </el-table-column>-->
 
-      <el-table-column align="center" label="标题" width="125">
+      <el-table-column align="center" label="举报信息" width="125">
         <template scope="scope">
-          <span>{{scope.row.title}}</span>
+          <span>{{scope.row.informInfo}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="租售" width="65">
+      <el-table-column align="center" label="描述" width="65">
         <template scope="scope">
-          <span>{{scope.row.houseUseType}}</span>
+          <span>{{scope.row.description}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="类型" width="65">
+      <el-table-column label="图片" width="120">
         <template scope="scope">
-          <span>{{scope.row.houseType}}</span>
+          <img :src="scope.row.image"  min-width="70" height="70" />
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="城市" width="140">
-        <template scope="scope">
-          <span>{{scope.row.city}}-{{scope.row.county}}</span>
-        </template>
-      </el-table-column>
 
-      <el-table-column align="center" label="区域" width="90">
-        <template scope="scope">
-          <span>{{scope.row.town}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="总面积" width="90">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地'">{{scope.row.coverArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房'">{{scope.row.area}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库'">{{scope.row.area}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="使用面积" width="100">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地' && scope.row.useArea != ''">{{scope.row.useArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="楼层" width="65">
-        <template scope="scope">
-          <span>{{scope.row.floor}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="价格" width="120">
-        <template scope="scope">
-          <span v-if="scope.row.houseUseType=='出售'">{{scope.row.sellingPrice}}{{scope.row.priceType}}</span>
-          <span v-if="scope.row.houseUseType=='出租'">{{scope.row.singlePrice}}{{scope.row.priceType}}</span>
-
-        </template>
-      </el-table-column>
-
-     <!-- <el-table-column min-width="80px" label="公司名">
-        <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
-&lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-        </template>
-      </el-table-column>
-
-      <el-table-column width="200px" align="center" label="公司地址">
-        <template scope="scope">
-          <span>{{scope.row.address}}</span>
-        </template>
-      </el-table-column>;
-
-
-      <el-table-column width="120px" label="注册日期">
-        <template scope="scope">
-          <span>{{scope.row.registerDate}}</span>
-&lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-        </template>
-      </el-table-column>-->
-
-      <el-table-column align="center" label="联系人" width="95">
-      <template scope="scope">
-        <span>{{scope.row.contacts}}</span>
-<!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-      </template>
-    </el-table-column>
-
-      <el-table-column align="center" label="手机号" width="130">
-        <template scope="scope">
-          <span>{{scope.row.phone}}</span>
-<!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="状态" width="80">
-        <template scope="scope">
-          <span v-if="scope.row.status=='1'">可用</span>
-          <span v-if="scope.row.status=='0'">已删除</span>
-        </template>
-      </el-table-column>
 
       <el-table-column align="center" label="操作" width="170">
         <template scope="scope">
@@ -271,7 +189,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchHouseList,deleteHouse,recoverHouse,topHouse,cityList,countyList,townList,updateHouse } from 'api/house_table';
+  import { fetchInformList,deleteHouse,recoverHouse,topHouse,cityList,countyList,townList,updateHouse } from 'api/inform_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -378,8 +296,8 @@
     methods: {
       getList() {
         this.listLoading = true;
-        fetchHouseList(this.listQuery).then(response => {
-          this.list = response.data.data.houseInfoList;
+        fetchInformList(this.listQuery).then(response => {
+          this.list = response.data.data.informInfoList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })

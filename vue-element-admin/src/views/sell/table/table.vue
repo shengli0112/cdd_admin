@@ -235,7 +235,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchSellList,deleteSell,recoverSell,topHouse,cityList,countyList,townList } from 'api/sell_park_table';
+  import { fetchSellList,deleteSell,recoverSell,cityList,countyList,townList } from 'api/sell_park_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'

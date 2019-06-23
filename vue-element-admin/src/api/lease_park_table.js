@@ -37,3 +37,26 @@ export function recoverLease(leaseParkId) {
     data
   });
 }
+
+export function cityList() {
+  return fetch({
+    url: '/region/findAllCity',
+    method: 'get'
+  });
+}
+
+export function countyList(city) {
+  return fetch({
+    url: '/region/findCountyByCity',
+    method: 'get',
+    params: { city }
+  });
+}
+
+export function townList(county) {
+  return fetch({
+    url: '/region/findTownByCounty',
+    method: 'get',
+    params: { county }
+  });
+}

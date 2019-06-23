@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px"
       class="card-box login-form">
-      <h3 class="title">系统登录</h3>
+      <h3 class="title">厂多多后台管理系统</h3>
       <el-form-item prop="email">
         <span class="svg-container"><icon-svg icon-class="jiedianyoujian"></icon-svg></span>
         <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="邮箱"></el-input>
@@ -17,8 +17,8 @@
           登录
         </el-button>
       </el-form-item>
-      <div class='tips'>admin账号为:admin@wallstreetcn.com 密码随便填</div>
-      <div class='tips'>editor账号:editor@wallstreetcn.com 密码随便填</div>
+      <!--<div class='tips'>admin账号为:admin@wallstreetcn.com 密码随便填</div>-->
+      <!--<div class='tips'>editor账号:editor@wallstreetcn.com 密码随便填</div>-->
     </el-form>
 
     <el-dialog title="第三方验证" :visible.sync="showDialog">

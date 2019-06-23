@@ -23,19 +23,35 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    name: '首页',
-    hidden: true,
-    children: [{ path: 'dashboard', component: _import('dashboard/index') }]
-  },
-  {
-    path: '/introduction',
-    component: Layout,
-    redirect: '/introduction/index',
-    icon: 'xinrenzhinan',
+    redirect: '/dashboard/',
+    name: '房源投诉',
+    icon: 'zujian',
+    meta: { role: ['admin'] },
     noDropdown: true,
-    children: [{ path: 'index', component: _import('introduction/index'), name: '简述' }]
-  }
+    children: [{ path: 'dashboard', component: _import('dashboard/index'), name: '房源投诉' }]
+  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/inform/',
+  //   name: '投诉管理',
+  //   icon: 'zujian',
+  //   meta: { role: ['admin'] },
+  //   noDropdown: true,
+  //   children: [
+  //     { path: 'lease', component: _import('lease/table/table'), name: '出租园区' },
+  //     { path: 'sell', component: _import('sell/table/table'), name: '出售园区' },
+  //
+  //   ]
+  // },
+  // {
+  //   path: '/introduction',
+  //   component: Layout,
+  //   redirect: '/introduction/index',
+  //   icon: 'xinrenzhinan',
+  //   noDropdown: true,
+  //   children: [{ path: 'index', component: _import('introduction/index'), name: '简述' }]
+  // }
 ]
 
 export default new Router({

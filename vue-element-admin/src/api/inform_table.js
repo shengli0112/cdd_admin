@@ -1,8 +1,8 @@
 import fetch from 'utils/fetch';
 
-export function fetchHouseList(query) {
+export function fetchInformList(query) {
   return fetch({
-    url: '/house/findHouseList',
+    url: '/house/findInformList',
     method: 'get',
     params: query
   });
