@@ -1,9 +1,11 @@
 <template>
-  <div class="app-container calendar-list-container">
-    <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词" v-model="listQuery.keyword">
-      </el-input>
-
+  <!--<div class="app-container calendar-list-container">-->
+    <!--<div class="filter-container">-->
+      <!--<el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词" v-model="listQuery.keyword">-->
+      <!--</el-input>-->
+    <!--</div>-->
+  <!--</div>-->
+</template>
       <!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
       <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">-->
       <!--        </el-option>-->
@@ -19,10 +21,10 @@
       <!--        </el-option>-->
       <!--      </el-select>-->
 
-      <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-      <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-      <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
-      <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
+     <!-- <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
+      &lt;!&ndash;      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>&ndash;&gt;
+      &lt;!&ndash;      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>&ndash;&gt;
+      &lt;!&ndash;      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>&ndash;&gt;
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
@@ -33,11 +35,11 @@
         </template>
       </el-table-column>
 
-      <!--<el-table-column width="180px" align="center" label="时间">
+      &lt;!&ndash;<el-table-column width="180px" align="center" label="时间">
         <template scope="scope">
           <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
-      </el-table-column>-->
+      </el-table-column>&ndash;&gt;
 
       <el-table-column align="center" label="举报信息" width="125">
         <template scope="scope">
@@ -102,69 +104,69 @@
         </el-form-item>
 
         <el-form-item label="街道">
-          <!--<el-input v-model="temp.street"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.street"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="房号">
-          <!--<el-input v-model="temp.houseNumber"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.houseNumber"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="面积">
-          <!--<el-input v-model="temp.area"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.area"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="售价">
-          <!--<el-input v-model="temp.sellingPrice"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.sellingPrice"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="电力">
-          <!--<el-input v-model="temp.electricity"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.electricity"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="房源类型">
-          <!--<el-input v-model="temp.houseType"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.houseType"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="房源使用类型">
-          <!--<el-input v-model="temp.houseUseType"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.houseUseType"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="楼层">
-          <!--<el-input v-model="temp.floor"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.floor"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="消防">
-          <!--<el-input v-model="temp.fireControl"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.fireControl"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="图片">
-          <!--<el-input v-model="temp.background"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.background"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="房源状态">
-          <!--<el-input v-model="temp.houseStatus"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.houseStatus"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="占地">
-          <!--<el-input v-model="temp.coverArea"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.coverArea"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="房源优势">
-          <!--<el-input v-model="temp.houseEdge"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.houseEdge"></el-input>&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="单价">
-          <!--<el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}-->
+          &lt;!&ndash;<el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}&ndash;&gt;
         </el-form-item>
 
         <el-form-item label="到期时间">
-          <!--<el-input v-model="temp.expireDate"></el-input>-->
+          &lt;!&ndash;<el-input v-model="temp.expireDate"></el-input>&ndash;&gt;
         </el-form-item>
 
 
         <el-form-item label="描述">
-          <!--<el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">-->
-          <!--</el-input>-->
+          &lt;!&ndash;<el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">&ndash;&gt;
+          &lt;!&ndash;</el-input>&ndash;&gt;
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -510,4 +512,4 @@
       },
     }
   }
-</script>
+</script>-->
