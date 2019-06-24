@@ -102,69 +102,69 @@
         </el-form-item>
 
         <el-form-item label="街道">
-          <el-input v-model="temp.street"></el-input>
+          <!--<el-input v-model="temp.street"></el-input>-->
         </el-form-item>
 
         <el-form-item label="房号">
-          <el-input v-model="temp.houseNumber"></el-input>
+          <!--<el-input v-model="temp.houseNumber"></el-input>-->
         </el-form-item>
 
         <el-form-item label="面积">
-          <el-input v-model="temp.area"></el-input>
+          <!--<el-input v-model="temp.area"></el-input>-->
         </el-form-item>
 
         <el-form-item label="售价">
-          <el-input v-model="temp.sellingPrice"></el-input>
+          <!--<el-input v-model="temp.sellingPrice"></el-input>-->
         </el-form-item>
 
         <el-form-item label="电力">
-          <el-input v-model="temp.electricity"></el-input>
+          <!--<el-input v-model="temp.electricity"></el-input>-->
         </el-form-item>
 
         <el-form-item label="房源类型">
-          <el-input v-model="temp.houseType"></el-input>
+          <!--<el-input v-model="temp.houseType"></el-input>-->
         </el-form-item>
 
         <el-form-item label="房源使用类型">
-          <el-input v-model="temp.houseUseType"></el-input>
+          <!--<el-input v-model="temp.houseUseType"></el-input>-->
         </el-form-item>
 
         <el-form-item label="楼层">
-          <el-input v-model="temp.floor"></el-input>
+          <!--<el-input v-model="temp.floor"></el-input>-->
         </el-form-item>
 
         <el-form-item label="消防">
-          <el-input v-model="temp.fireControl"></el-input>
+          <!--<el-input v-model="temp.fireControl"></el-input>-->
         </el-form-item>
 
         <el-form-item label="图片">
-          <el-input v-model="temp.background"></el-input>
+          <!--<el-input v-model="temp.background"></el-input>-->
         </el-form-item>
 
         <el-form-item label="房源状态">
-          <el-input v-model="temp.houseStatus"></el-input>
+          <!--<el-input v-model="temp.houseStatus"></el-input>-->
         </el-form-item>
 
         <el-form-item label="占地">
-          <el-input v-model="temp.coverArea"></el-input>
+          <!--<el-input v-model="temp.coverArea"></el-input>-->
         </el-form-item>
 
         <el-form-item label="房源优势">
-          <el-input v-model="temp.houseEdge"></el-input>
+          <!--<el-input v-model="temp.houseEdge"></el-input>-->
         </el-form-item>
 
         <el-form-item label="单价">
-          <el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}
+          <!--<el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}-->
         </el-form-item>
 
         <el-form-item label="到期时间">
-          <el-input v-model="temp.expireDate"></el-input>
+          <!--<el-input v-model="temp.expireDate"></el-input>-->
         </el-form-item>
 
 
         <el-form-item label="描述">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">
-          </el-input>
+          <!--<el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">-->
+          <!--</el-input>-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -275,7 +275,7 @@
       }
     },
     created() {
-      this.getList();
+      // this.getList();
     },
     filters: {
       statusFilter(status) {
