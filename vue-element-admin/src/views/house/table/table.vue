@@ -134,6 +134,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="创建时间" width="130">
+        <template scope="scope">
+          <span>{{scope.row.createTs}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
           <span v-if="scope.row.status=='1'">可用</span>
@@ -271,7 +277,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchHouseList,deleteHouse,recoverHouse,topHouse,cityList,countyList,townList,updateHouse } from 'api/house_table';
+  import { fetchHouseList, deleteHouse, recoverHouse, topHouse, cityList, countyList,townList,updateHouse } from 'api/house_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -316,7 +322,7 @@
           title: '',
           type: '',
           city:'',
-          county:'',
+          county: '',
           town:'',
           street:'',
           houseNumber:'',
