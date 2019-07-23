@@ -232,7 +232,7 @@
         'email',
         'introduction',
         'roles'
-      ])
+      ]),
       list: null,
       total: null,
       listLoading: true,
