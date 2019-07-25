@@ -33,112 +33,23 @@
         </template>
       </el-table-column>
 
-      <!--<el-table-column width="180px" align="center" label="时间">
-        <template scope="scope">
-          <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
-        </template>
-      </el-table-column>-->
+      <el-table-column align="center" label="举报信息" width="125">
+          <template scope="scope">
+            <span>{{scope.row.informInfo}}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column align="center" label="标题" width="125">
-        <template scope="scope">
-          <span>{{scope.row.title}}</span>
-        </template>
-      </el-table-column>
+        <el-table-column align="center" label="描述" width="65">
+          <template scope="scope">
+            <span>{{scope.row.description}}</span>
+          </template>
+        </el-table-column>
 
-      <el-table-column align="center" label="租售" width="65">
-        <template scope="scope">
-          <span>{{scope.row.houseUseType}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="类型" width="65">
-        <template scope="scope">
-          <span>{{scope.row.houseType}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="城市" width="140">
-        <template scope="scope">
-          <span>{{scope.row.city}}-{{scope.row.county}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="区域" width="90">
-        <template scope="scope">
-          <span>{{scope.row.town}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="总面积" width="90">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地'">{{scope.row.coverArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房'">{{scope.row.area}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库'">{{scope.row.area}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="使用面积" width="100">
-        <template scope="scope">
-          <span v-if="scope.row.houseType=='土地' && scope.row.useArea != ''">{{scope.row.useArea}}亩</span>
-          <span v-if="scope.row.houseType=='厂房' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-          <span v-if="scope.row.houseType=='仓库' && scope.row.useArea != ''">{{scope.row.useArea}}㎡</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="楼层" width="65">
-        <template scope="scope">
-          <span>{{scope.row.floor}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="价格" width="120">
-        <template scope="scope">
-          <span v-if="scope.row.houseUseType=='出售'">{{scope.row.sellingPrice}}{{scope.row.priceType}}</span>
-          <span v-if="scope.row.houseUseType=='出租'">{{scope.row.singlePrice}}{{scope.row.priceType}}</span>
-
-        </template>
-      </el-table-column>
-
-      <!-- <el-table-column min-width="80px" label="公司名">
-         <template scope="scope">
-           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
- &lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-         </template>
-       </el-table-column>
-
-       <el-table-column width="200px" align="center" label="公司地址">
-         <template scope="scope">
-           <span>{{scope.row.address}}</span>
-         </template>
-       </el-table-column>;
-
-
-       <el-table-column width="120px" label="注册日期">
-         <template scope="scope">
-           <span>{{scope.row.registerDate}}</span>
- &lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-         </template>
-       </el-table-column>-->
-
-      <el-table-column align="center" label="联系人" width="95">
-        <template scope="scope">
-          <span>{{scope.row.contacts}}</span>
-          <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="手机号" width="130">
-        <template scope="scope">
-          <span>{{scope.row.phone}}</span>
-          <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="创建时间" width="130">
-        <template scope="scope">
-          <span>{{scope.row.createTs}}</span>
-        </template>
-      </el-table-column>
+        <el-table-column label="图片" width="120">
+          <template scope="scope">
+            <img :src="scope.row.image"  min-width="70" height="70" />
+          </template>
+        </el-table-column>
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
@@ -149,9 +60,8 @@
 
       <el-table-column align="center" label="操作" width="170">
         <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">修改</span>
+          
           <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
-          <span class="link-type" @click="handleTop(scope.row)">置顶</span>
           <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>
         </template>
       </el-table-column>
@@ -164,120 +74,14 @@
       </el-pagination>
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-
-        <el-form-item label="区域">
-          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity" label-width="70px">
-            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区" @change="selectCounty" label-width="70px">
-            <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-          <el-select class="filter-item" v-model="temp.town" learable filterable  placeholder="选择镇" @change="selectTown" label-width="70px">
-            <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="街道">
-          <el-input v-model="temp.street"></el-input>
-        </el-form-item>
-
-        <el-form-item label="房号">
-          <el-input v-model="temp.houseNumber"></el-input>
-        </el-form-item>
-
-        <el-form-item label="面积">
-          <el-input v-model="temp.area"></el-input>
-        </el-form-item>
-
-        <el-form-item label="售价">
-          <el-input v-model="temp.sellingPrice"></el-input>
-        </el-form-item>
-
-        <el-form-item label="电力">
-          <el-input v-model="temp.electricity"></el-input>
-        </el-form-item>
-
-        <el-form-item label="房源类型">
-          <el-input v-model="temp.houseType"></el-input>
-        </el-form-item>
-
-        <el-form-item label="房源使用类型">
-          <el-input v-model="temp.houseUseType"></el-input>
-        </el-form-item>
-
-        <el-form-item label="楼层">
-          <el-input v-model="temp.floor"></el-input>
-        </el-form-item>
-
-        <el-form-item label="消防">
-          <el-input v-model="temp.fireControl"></el-input>
-        </el-form-item>
-
-        <el-form-item label="图片">
-          <el-input v-model="temp.background"></el-input>
-        </el-form-item>
-
-        <el-form-item label="房源状态">
-          <el-input v-model="temp.houseStatus"></el-input>
-        </el-form-item>
-
-        <el-form-item label="占地">
-          <el-input v-model="temp.coverArea"></el-input>
-        </el-form-item>
-
-        <el-form-item label="房源优势">
-          <el-input v-model="temp.houseEdge"></el-input>
-        </el-form-item>
-
-        <el-form-item label="单价">
-          <el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}
-        </el-form-item>
-
-        <el-form-item label="到期时间">
-          <el-input v-model="temp.expireDate"></el-input>
-        </el-form-item>
-
-
-        <el-form-item label="描述">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="create">确 定</el-button>
-        <el-button v-else type="primary" @click="update">确 定</el-button>
-      </div>
-    </el-dialog>
-
-    <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"> </el-table-column>
-        <el-table-column prop="pv" label="pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
+    
 
   </div>
 </template>
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchHouseList, deleteHouse, recoverHouse, topHouse, cityList, countyList,townList,updateHouse } from 'api/house_table';
+  import { fetchInformList } from 'api/inform_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -314,9 +118,6 @@
           type: undefined,
           sort: '+id'
         },
-        cityList:null,
-        countyList:null,
-        townList:null,
         temp: {
           id: undefined,
           title: '',
@@ -384,7 +185,7 @@
     methods: {
       getList() {
         this.listLoading = true;
-        fetchHouseList(this.listQuery).then(response => {
+        fetchInformList(this.listQuery).then(response => {
           this.list = response.data.data.houseInfoList;
           this.total = response.data.data.total;
           this.listLoading = false;
@@ -421,57 +222,7 @@
             this.getList();
           }
         });
-      },
-      handleCreate() {
-        this.resetTemp();
-        this.dialogStatus = 'create';
-        this.dialogFormVisible = true;
-      },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, row);
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
-      },
-      handleRecover(row) {
-        MessageBox.confirm('您确定恢复该房源么', '确定', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          recoverHouse(row.id).then(response => {
-            // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
-              this.$notify({
-                title: '成功',
-                message: '恢复成功',
-                type: 'success',
-                duration: 2000
-              });
-              this.getList();
-            }
-          })
-        })
-      },
-      handleTop(row) {
-        MessageBox.confirm('您确定置顶该房源么', '确定', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          topHouse(row.id).then(response => {
-            // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
-              this.$notify({
-                title: '成功',
-                message: '置顶成功',
-                type: 'success',
-                duration: 2000
-              });
-              this.getList();
-            }
-          })
-        })
-      },
+      },    
       handleDelete(row) {
         MessageBox.confirm('您确定删除该房源么', '确定删除', {
           confirmButtonText: '确定删除',
@@ -491,19 +242,6 @@
             }
           })
         })
-      },
-      create() {
-        this.temp.id = parseInt(Math.random() * 100) + 1024;
-        this.temp.timestamp = +new Date();
-        this.temp.author = '原创作者';
-        this.list.unshift(this.temp);
-        this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        });
       },
       update() {
         this.temp.timestamp = +this.temp.timestamp;
