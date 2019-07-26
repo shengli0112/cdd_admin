@@ -1,31 +1,33 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词" v-model="listQuery.keyword">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词"
+                v-model="listQuery.keyword">
       </el-input>
 
-<!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
-<!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
+      <!--        <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
-<!--      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">-->
-<!--        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.type" placeholder="类型">-->
+      <!--        <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
-<!--      <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort" placeholder="排序">-->
-<!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">-->
-<!--        </el-option>-->
-<!--      </el-select>-->
+      <!--      <el-select @change='handleFilter' style="width: 120px" class="filter-item" v-model="listQuery.sort" placeholder="排序">-->
+      <!--        <el-option v-for="item in sortOptions" :key="item.key" :label="item.label" :value="item.key">-->
+      <!--        </el-option>-->
+      <!--      </el-select>-->
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-<!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-<!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
-<!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
+      <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
+      <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
+      <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
+    <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row
+              style="width: 100%">
 
       <el-table-column align="center" label="序号" width="65">
         <template scope="scope">
@@ -99,38 +101,38 @@
         </template>
       </el-table-column>
 
-     <!-- <el-table-column min-width="80px" label="公司名">
-        <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
-&lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-        </template>
-      </el-table-column>
+      <!-- <el-table-column min-width="80px" label="公司名">
+         <template scope="scope">
+           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
+ &lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
+         </template>
+       </el-table-column>
 
-      <el-table-column width="200px" align="center" label="公司地址">
-        <template scope="scope">
-          <span>{{scope.row.address}}</span>
-        </template>
-      </el-table-column>;
+       <el-table-column width="200px" align="center" label="公司地址">
+         <template scope="scope">
+           <span>{{scope.row.address}}</span>
+         </template>
+       </el-table-column>;
 
 
-      <el-table-column width="120px" label="注册日期">
-        <template scope="scope">
-          <span>{{scope.row.registerDate}}</span>
-&lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-        </template>
-      </el-table-column>-->
+       <el-table-column width="120px" label="注册日期">
+         <template scope="scope">
+           <span>{{scope.row.registerDate}}</span>
+ &lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
+         </template>
+       </el-table-column>-->
 
       <el-table-column align="center" label="联系人" width="95">
-      <template scope="scope">
-        <span>{{scope.row.contacts}}</span>
-<!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-      </template>
-    </el-table-column>
+        <template scope="scope">
+          <span>{{scope.row.contacts}}</span>
+          <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="手机号" width="130">
         <template scope="scope">
           <span>{{scope.row.phone}}</span>
-<!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+          <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
         </template>
       </el-table-column>
 
@@ -159,13 +161,16 @@
     </el-table>
 
     <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
-        :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                     :current-page.sync="listQuery.page"
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
+                     layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+      <el-form class="small-space" :model="temp" label-position="left" label-width="70px"
+               style='width: 400px; margin-left:50px;'>
         <el-form-item label="标题">
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
@@ -175,15 +180,18 @@
         </el-form-item>
 
         <el-form-item label="区域">
-          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity" label-width="70px">
-          <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
-          </el-option>
-        </el-select>
-          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区" @change="selectCounty" label-width="70px">
+          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
+            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区"
+                     @change="selectCounty" label-width="70px">
             <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
-          <el-select class="filter-item" v-model="temp.town" learable filterable  placeholder="选择镇" @change="selectTown" label-width="70px">
+          <el-select class="filter-item" v-model="temp.town" learable filterable placeholder="选择镇" @change="selectTown"
+                     label-width="70px">
             <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
@@ -242,7 +250,8 @@
         </el-form-item>
 
         <el-form-item label="单价">
-          <el-input v-model="temp.singlePrice"></el-input>{{temp.priceType}}
+          <el-input v-model="temp.singlePrice"></el-input>
+          {{temp.priceType}}
         </el-form-item>
 
         <el-form-item label="到期时间">
@@ -251,7 +260,8 @@
 
 
         <el-form-item label="描述">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.description">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"
+                    v-model="temp.description">
           </el-input>
         </el-form-item>
       </el-form>
@@ -264,8 +274,8 @@
 
     <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"> </el-table-column>
-        <el-table-column prop="pv" label="pv"> </el-table-column>
+        <el-table-column prop="key" label="渠道"></el-table-column>
+        <el-table-column prop="pv" label="pv"></el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
@@ -277,17 +287,26 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchHouseList, deleteHouse, recoverHouse, topHouse, cityList, countyList,townList,updateHouse } from 'api/house_table';
+  import {
+    fetchHouseList,
+    deleteHouse,
+    recoverHouse,
+    topHouse,
+    cityList,
+    countyList,
+    townList,
+    updateHouse
+  } from 'api/house_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
-  const calendarTypeOptions = [
-      { key: 'CN', display_name: '中国' },
-      { key: 'US', display_name: '美国' },
-      { key: 'JP', display_name: '日本' },
-      { key: 'EU', display_name: '欧元区' }
-  ];
 
+  const calendarTypeOptions = [
+    { key: 'CN', display_name: '中国' },
+    { key: 'US', display_name: '美国' },
+    { key: 'JP', display_name: '日本' },
+    { key: 'EU', display_name: '欧元区' }
+  ];
 
 
   // arr to obj
@@ -314,37 +333,37 @@
           type: undefined,
           sort: '+id'
         },
-        cityList:null,
-        countyList:null,
-        townList:null,
+        cityList: null,
+        countyList: null,
+        townList: null,
         temp: {
           id: undefined,
           title: '',
           type: '',
-          city:'',
+          city: '',
           county: '',
-          town:'',
-          street:'',
-          houseNumber:'',
-          area:'',
-          sellingPrice:'',
-          electricity:'',
-          contacts:'',
-          phone:'',
-          houseType:'',
-          houseUseType:'',
-          floor:'',
-          fireControl:'',
-          background:'',
-          houseStatus:'',
-          coverArea:'',
-          houseEdge:'',
-          singlePrice:'',
-          useArea:'',
-          signContract:'',
-          description:'',
-          trade:'',
-          expireDate:''
+          town: '',
+          street: '',
+          houseNumber: '',
+          area: '',
+          sellingPrice: '',
+          electricity: '',
+          contacts: '',
+          phone: '',
+          houseType: '',
+          houseUseType: '',
+          floor: '',
+          fireControl: '',
+          background: '',
+          houseStatus: '',
+          coverArea: '',
+          houseEdge: '',
+          singlePrice: '',
+          useArea: '',
+          signContract: '',
+          description: '',
+          trade: '',
+          expireDate: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
@@ -378,7 +397,7 @@
         return calendarTypeKeyValue[type]
       }
     },
-    mounted(){
+    mounted() {
       this.getCityList()
     },
     methods: {
@@ -440,7 +459,7 @@
         }).then(() => {
           recoverHouse(row.id).then(response => {
             // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
+            if (response.data.flag === 1) {
               this.$notify({
                 title: '成功',
                 message: '恢复成功',
@@ -460,7 +479,7 @@
         }).then(() => {
           topHouse(row.id).then(response => {
             // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
+            if (response.data.flag === 1) {
               this.$notify({
                 title: '成功',
                 message: '置顶成功',
@@ -480,7 +499,7 @@
         }).then(() => {
           deleteHouse(row.id).then(response => {
             // this.flag = response.data.flag;
-            if(response.data.flag == 1){
+            if (response.data.flag === 1) {
               this.$notify({
                 title: '成功',
                 message: '删除成功',
@@ -509,7 +528,7 @@
         this.temp.timestamp = +this.temp.timestamp;
         updateHouse(this.temp).then(response => {
           // this.flag = response.data.flag;
-          if(response.data.flag == 1){
+          if (response.data.flag === 1) {
             this.$notify({
               title: '成功',
               message: '删除成功',
@@ -521,7 +540,6 @@
         })
 
         this.dialogFormVisible = false;
-
       },
       resetTemp() {
         this.temp = {
@@ -552,9 +570,9 @@
           }
         }))
       },
-      getCityList(cityName){
+      getCityList(cityName) {
         // let cityName = this.$route.query.city
-        this.temp.county=''
+        this.temp.county = ''
         this.temp.town = ''
         cityList().then(response => {
           this.cityList = response.data.data;
@@ -563,7 +581,7 @@
         this.getCountyList()
       },
 
-      getCountyList(countyName){
+      getCountyList(countyName) {
         // alert(this.city)
         this.temp.town = ''
         countyList(this.city).then(response => {
@@ -572,30 +590,27 @@
         this.county = countyName
         this.getTownList()
       },
-      getTownList(){
+      getTownList() {
         // alert(this.county)
         townList(this.county).then(response => {
           this.townList = response.data.data;
         })
       },
-      selectCity(val){
-
+      selectCity(val) {
         this.cityList = []
         this.countyList = []
         this.townList = []
         this.getCityList(val)
       },
-      selectCounty(val){
+      selectCounty(val) {
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
       },
-      selectTown(val){
+      selectTown(val) {
         this.townList = []
         this.getTownList(val);
-
-
-      },
+      }
     }
   }
 </script>

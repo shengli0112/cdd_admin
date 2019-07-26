@@ -53,16 +53,14 @@
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
-          <span v-if="scope.row.status=='1'">可用</span>
-          <span v-if="scope.row.status=='0'">已删除</span>
+          <span v-if="scope.row.status=='1'">已处理</span>
+          <span v-if="scope.row.status=='0'">未处理</span>
         </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作" width="170">
         <template scope="scope">
-          
-          <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
-          <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>
+          <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">处理</span>
         </template>
       </el-table-column>
 
@@ -223,7 +221,7 @@
           }
         });
       },    
-      handleDelete(row) {
+      handleRecover(row) {
         MessageBox.confirm('您确定删除该房源么', '确定删除', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消',
