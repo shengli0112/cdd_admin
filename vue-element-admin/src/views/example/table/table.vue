@@ -25,23 +25,77 @@
 <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
+    <el-table :key='tableKey' :data="list"
+              v-loading.body="listLoading" border fit highlight-current-row
+              style="width: 100%" :row-key="getRowKeys"
+              :expand-row-keys="userList"
+              @current-change="toggleRowExpansion"
+    >
 
-      <!--<el-table-column align="center" label="序号" width="65">
-        <template scope="scope">
-          <span>{{scope.row.id}}</span>
-        </template>
+      <el-table-column type="expand" width="0px" label="扩展">
+        <el-table :key='userTableKey' :data="userList" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
+
+          <el-table-column align="center" label="序号" width="65">
+            <template scope="props">
+              <span>{{props.row.id}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="用户名" width="125">
+            <template scope="props">
+              <span>{{props.row.username}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="手机号" width="125">
+            <template scope="props">
+              <span>{{props.row.phone}}</span>
+            </template>
+          </el-table-column>
+
+
+
+          <el-table-column align="center" label="用户类型" width="120">
+            <template scope="props">
+              <span v-if="props.row.userType=='1'">普通用户</span>
+              <span v-if="props.row.userType=='2'">经纪人</span>
+              <span v-if="props.row.userType=='3'">经纪人主管</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="多多币" width="140">
+            <template scope="props">
+              <span>{{props.row.integral}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="服务区域" width="150">
+            <template scope="props">
+              <span>{{props.row.serviceArea}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="注册时间" width="180">
+            <template scope="props">
+              <span>{{props.row.createTs}}</span>
+            </template>
+          </el-table-column>
+
+
+          <el-table-column align="center" label="状态" width="80">
+            <template scope="props">
+              <span v-if="props.row.status=='1'">可用</span>
+              <span v-if="props.row.status=='0'">已删除</span>
+            </template>
+          </el-table-column>
+
+
+        </el-table>
       </el-table-column>
-
-      <el-table-column width="180px" align="center" label="时间">
-        <template scope="scope">
-          <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
-        </template>
-      </el-table-column>-->
 
       <el-table-column min-width="80px" label="公司名">
         <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
+          <span>{{scope.row.companyName}}</span>
 <!--          <el-tag>{{scope.row.type | typeFilter}}</el-tag>-->
         </template>
       </el-table-column>
@@ -75,8 +129,10 @@
       </el-table-column>
       <el-table-column label="营业执照" width="120">
         <template scope="scope">
-          <img :src="scope.row.license"  min-width="70" height="70" />
+          <img :src="scope.row.license"  min-width="70" height="70" v-if="scope.row.license.length>0" :data-img="scope.row.license" type="text" size="small" @click="$imgPreview" />
+
         </template>
+
       </el-table-column>
 
       <el-table-column align="center" label="操作" width="100">
@@ -88,6 +144,8 @@
 
         </template>
       </el-table-column>
+
+
 
     </el-table>
 
@@ -152,7 +210,7 @@
 </template>
 
 <script>
-  import { fetchList, fetchPv, passAudit } from 'api/article_table';
+  import { fetchList, fetchPv, passAudit, companyUserList } from 'api/article_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
 
@@ -177,8 +235,10 @@
     data() {
       return {
         list: null,
+        userList:null,
         total: null,
         listLoading: true,
+        expands:null,
         listQuery: {
           page: 1,
           limit: 20,
@@ -186,6 +246,9 @@
           title: undefined,
           type: undefined,
           sort: '+id'
+        },
+        companyName:{
+          companyName:undefined
         },
         temp: {
           id: undefined,
@@ -209,7 +272,12 @@
         dialogPvVisible: false,
         pvData: [],
         showAuditor: false,
-        tableKey: 0
+        tableKey: 0,
+        userTableKey: 0,
+        // 获取row的key值
+        getRowKeys(row) {
+            return row.companyName;
+        },
       }
     },
     created() {
@@ -302,6 +370,25 @@
           duration: 2000
         });
       },
+      rowClick:function(row, column, cell, event) {
+          // alert(row.companyName)
+          this.companyName.companyName=row.companyName
+          companyUserList(this.companyName).then(response => {
+              this.userList = response.data.data;
+          })
+
+          // alert('ddd')
+
+      },
+      toggleRowExpansion(row){
+          this.userList = [];
+          this.userList.push(row.id);
+          this.companyName.companyName=row.companyName
+          companyUserList(this.companyName).then(response => {
+              this.userList = response.data.data;
+          })
+      },
+
       update() {
         this.temp.timestamp = +this.temp.timestamp;
         for (const v of this.list) {

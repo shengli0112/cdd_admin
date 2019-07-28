@@ -2,7 +2,7 @@ import fetch from 'utils/fetch';
 
 export function fetchInformList(query) {
   return fetch({
-    url: '/house/findInformList',
+    url: '/inform/findInformList',
     method: 'get',
     params: query
   });
@@ -16,12 +16,12 @@ export function updateHouse(data) {
   });
 }
 
-export function deleteHouse(houseId) {
+export function handlerInform(informId) {
   const data = {
-    houseId
+    informId
   };
   return fetch({
-    url: '/house/deleteHouse',
+    url: '/inform/handlerInform',
     method: 'post',
     data
   });

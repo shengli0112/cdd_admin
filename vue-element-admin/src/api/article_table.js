@@ -8,6 +8,14 @@ export function fetchList(query) {
   });
 }
 
+export function companyUserList(query) {
+  return fetch({
+    url: '/broker/companyUserList',
+    method: 'get',
+    params: query
+  });
+}
+
 export function fetchPv(pv) {
   return fetch({
     url: '/article_table/pv',
