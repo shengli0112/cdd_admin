@@ -136,10 +136,20 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="创建时间" width="130">
+      <el-table-column align="center" label="创建时间" width="180">
         <template scope="scope">
           <span>{{scope.row.createTs}}</span>
         </template>
+      </el-table-column>
+
+      <el-table-column label="图片" width="120">
+        <template scope="scope">
+          <el-button  v-if="scope.row.background.length>0" :data-img="scope.row.background" type="text" size="small" @click="$imgPreview" >
+            查看图片
+          </el-button>
+
+        </template>
+
       </el-table-column>
 
       <el-table-column align="center" label="状态" width="80">

@@ -39,6 +39,12 @@
           </template>
         </el-table-column>
 
+      <el-table-column align="center" label="房源序号" width="125">
+        <template scope="scope">
+          <span>{{scope.row.houseId}}</span>
+        </template>
+      </el-table-column>
+
         <el-table-column align="center" label="描述" width="65">
           <template scope="scope">
             <span>{{scope.row.description}}</span>
@@ -50,6 +56,12 @@
             <img :src="scope.row.image"  min-width="70" height="70" />
           </template>
         </el-table-column>
+
+      <el-table-column align="center" label="举报时间" width="180">
+        <template scope="scope">
+          <span>{{scope.row.createTs | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
@@ -72,14 +84,14 @@
       </el-pagination>
     </div>
 
-    
+
 
   </div>
 </template>
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchInformList } from 'api/inform_table';
+  import { fetchInformList,handlerInform } from 'api/inform_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -184,7 +196,7 @@
       getList() {
         this.listLoading = true;
         fetchInformList(this.listQuery).then(response => {
-          this.list = response.data.data.houseInfoList;
+          this.list = response.data.data.informList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
@@ -220,14 +232,14 @@
             this.getList();
           }
         });
-      },    
+      },
       handleRecover(row) {
-        MessageBox.confirm('您确定删除该房源么', '确定删除', {
-          confirmButtonText: '确定删除',
+        MessageBox.confirm('您确定已经处理该投诉了么', '确定', {
+          confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteHouse(row.id).then(response => {
+          handlerInform(row.id).then(response => {
             // this.flag = response.data.flag;
             if(response.data.flag == 1){
               this.$notify({
