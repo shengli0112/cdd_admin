@@ -111,8 +111,8 @@
     },
     methods: {
       getHouseCount() {
-        fetchHouseCount(this.listQuery).then(response => {
-          this.list = response.data.data;
+        fetchHouseCount().then(response => {
+          this.statisticsData = response.data.data;
         })
       }
     },
