@@ -274,6 +274,50 @@
                     v-model="temp.description">
           </el-input>
         </el-form-item>
+
+
+       <!-- <el-form-item label="缩略图" prop="smallModelPhoto">
+          <el-upload
+            action="http://img.cddwang.com"
+            :accept="accept"
+            list-type="picture"
+            :limit=1
+            :data="uptoken"
+            :before-upload="beforeAvatarUpload"
+            :on-remove="handleRemoveChange"
+            :on-success="handleSuccessChange"
+            :file-list="formData.smallModelPhoto">
+            <el-button size="mini" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif文件，且单张不超过10M，缩略图只能传一张</div>
+          </el-upload>
+        </el-form-item>-->
+
+        <el-form-item label="上传图片">
+          <el-upload
+            list-type="picture-card"
+            :action="domain"
+            :data="QiniuData"
+            :on-remove="handleRemove"
+            :on-error="uploadError"
+            :on-success="uploadSuccess"
+            :before-remove="beforeRemove"
+            :before-upload="beforeAvatarUpload"
+            :limit="3"
+            multiple
+            :on-exceed="handleExceed"
+            :file-list="fileList"
+          >
+<!--            <el-button size="small" type="primary">选择图片</el-button>-->
+            <i class="el-icon-plus"></i>
+          </el-upload>
+<!--          <el-dialog :visible.sync="dialogVisible">-->
+<!--            <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
+<!--          </el-dialog>-->
+<!--          <div>-->
+<!--            <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
+<!--          </div>-->
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -282,15 +326,6 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"></el-table-column>
-        <el-table-column prop="pv" label="pv"></el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
 
   </div>
 </template>
@@ -310,13 +345,15 @@
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
+  import { getToken } from 'api/qiniu'
 
   const calendarTypeOptions = [
-    { key: 'CN', display_name: '中国' },
-    { key: 'US', display_name: '美国' },
-    { key: 'JP', display_name: '日本' },
-    { key: 'EU', display_name: '欧元区' }
+      { key: 'CN', display_name: '中国' },
+      { key: 'US', display_name: '美国' },
+      { key: 'JP', display_name: '日本' },
+      { key: 'EU', display_name: '欧元区' }
   ];
+
 
 
   // arr to obj
@@ -332,6 +369,7 @@
     },
     data() {
       return {
+        dialogVisible: false,
         list: null,
         total: null,
         listLoading: true,
@@ -388,7 +426,20 @@
         dialogPvVisible: false,
         pvData: [],
         showAuditor: false,
-        tableKey: 0
+        tableKey: 0,
+
+        accept: "image/jpeg,image/gif,image/png,image/bmp",
+        formData: {
+            smallModelPhoto: [],
+        },
+        QiniuData: {
+            token: '',
+            key: ""
+        },
+        domain: "https://upload-z2.qiniup.com", // 七牛云的上传地址（华南区）
+        qiniuaddr: "http://img.cddwang.com", // 七牛云的图片外链地址
+        uploadPicUrl: "", //提交到后台图片地址
+        fileList: []
       }
     },
     created() {
@@ -408,9 +459,105 @@
       }
     },
     mounted() {
-      this.getCityList()
+      this.getCityList(),
+      this.getQiniuToken()
     },
     methods: {
+        handleRemove(file, fileList) {
+            this.uploadPicUrl = "";
+        },
+        handleExceed(files, fileList) {
+            this.$message.warning(
+                `当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！`
+            );
+        },
+        beforeAvatarUpload(file) {
+            const isPNG = file.type === "image/png";
+            const isJPEG = file.type === "image/jpeg";
+            const isJPG = file.type === "image/jpg";
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isPNG && !isJPEG && !isJPG) {
+                this.$message.error("上传头像图片只能是 jpg、png、jpeg 格式!");
+                return false;
+            }
+            if (!isLt2M) {
+                this.$message.error("上传头像图片大小不能超过 2MB!");
+                return false;
+            }
+            this.QiniuData.key = `upload_pic_${file.name}`;
+        },
+        uploadSuccess(response, file, fileList) {
+            console.log(fileList);
+            alert(fileList)
+            this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
+            this.dialogVisible = true;
+        },
+        uploadError(err, file, fileList) {
+            this.$message({
+                message: "上传出错，请重试！",
+                type: "error",
+                center: true
+            });
+        },
+        beforeRemove(file, fileList) {
+            // return this.$confirm(`确定移除 ${ file.name }？`);
+        },
+        //提交数据到后台
+        handleSubmit() {
+            let ajaxData = {
+                receipt_img: this.uploadPicUrl //图片地址
+            };
+            this.$http.put("/xxx", ajaxData)
+                .then(response => {
+                    let { code, data } = response.data;
+                    if (code == "0") {
+                        this.$message({
+                            message: "提交成功！",
+                            type: "success",
+                            center: true
+                        });
+                    }
+                })
+                .catch(error => {
+                    this.$message({
+                        message: error.msg,
+                        type: "error",
+                        center: true
+                    });
+                });
+        },
+        getQiniuToken(){
+          getToken().then(response => {
+              this.QiniuData = response.data.data;
+
+          });
+      },
+
+      handleRemoveChange(file, fileList){
+          var filelists = [];
+          fileList.forEach(function (elem) {
+              var item = {
+                  name: elem.name,
+                  url: Config.qiniu.action + elem.name
+              }
+              filelists.push(item);
+          })
+
+          this.formData.smallModelPhoto = filelists;
+      },
+      handleSuccessChange(response, file, fileList) { //上传成功后在图片框显示图片
+          var filelists = [];
+          fileList.forEach(function (elem) {
+              var item = {
+                  name: elem.name,
+                  url: "http://img.cddwang.com" + elem.name
+              }
+              filelists.push(item);
+          })
+          this.formData.smallModelPhoto = filelists;
+      },
+
       getList() {
         this.listLoading = true;
         fetchHouseList(this.listQuery).then(response => {

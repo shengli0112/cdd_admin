@@ -35,11 +35,11 @@
       <el-table-column type="expand" width="0px" label="扩展">
         <el-table :key='userTableKey' :data="userList" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
 
-          <el-table-column align="center" label="序号" width="65">
+          <!--<el-table-column align="center" label="序号" width="65">
             <template scope="props">
               <span>{{props.row.id}}</span>
             </template>
-          </el-table-column>
+          </el-table-column>-->
 
           <el-table-column align="center" label="用户名" width="125">
             <template scope="props">
@@ -89,6 +89,13 @@
             </template>
           </el-table-column>
 
+          <el-table-column align="center" label="操作" width="150">
+            <template scope="scope">
+              <span class="link-type" @click="handleUpdate(scope.row)">修改</span>
+              <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
+              <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>
+            </template>
+          </el-table-column>
 
         </el-table>
       </el-table-column>
@@ -211,8 +218,10 @@
 
 <script>
   import { fetchList, fetchPv, passAudit, companyUserList } from 'api/article_table';
+  import { deleteUser,recoverUser } from 'api/user_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
+  import { MessageBox } from 'element-ui'
 
   const calendarTypeOptions = [
       { key: 'CN', display_name: '中国' },
@@ -343,19 +352,49 @@
         this.dialogFormVisible = true;
       },
       handleUpdate(row) {
-        this.temp = Object.assign({}, row);
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
+          this.temp = Object.assign({}, row);
+          this.dialogStatus = 'update';
+          this.dialogFormVisible = true;
+      },
+      handleRecover(row) {
+          MessageBox.confirm('您确定恢复该用户么', '确定', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              recoverUser(row.id).then(response => {
+                  // this.flag = ;
+                  if(response.data.flag == 1){
+                      this.$notify({
+                          title: '成功',
+                          message: '恢复成功',
+                          type: 'success',
+                          duration: 2000
+                      });
+                      this.getList();
+                  }
+              })
+          })
       },
       handleDelete(row) {
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
-        });
-        const index = this.list.indexOf(row);
-        this.list.splice(index, 1);
+          MessageBox.confirm('您确定删除该用户么', '确定删除', {
+              confirmButtonText: '确定删除',
+              cancelButtonText: '取消',
+              type: 'warning'
+          }).then(() => {
+              deleteUser(row.id).then(response => {
+
+                  if(response.data.flag == 1){
+                      this.$notify({
+                          title: '成功',
+                          message: '删除成功',
+                          type: 'success',
+                          duration: 2000
+                      });
+                      this.getList();
+                  }
+              })
+          })
       },
       create() {
         this.temp.id = parseInt(Math.random() * 100) + 1024;
