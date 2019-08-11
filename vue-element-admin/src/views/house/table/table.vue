@@ -243,9 +243,6 @@
           <el-input v-model="temp.fireControl"></el-input>
         </el-form-item>
 
-        <el-form-item label="图片">
-          <el-input v-model="temp.background"></el-input>
-        </el-form-item>
 
         <el-form-item label="房源状态">
           <el-input v-model="temp.houseStatus"></el-input>
@@ -292,7 +289,7 @@
           </el-upload>
         </el-form-item>-->
 
-        <el-form-item label="上传图片">
+        <el-form-item label="图片">
           <el-upload
             list-type="picture-card"
             :action="domain"
@@ -464,6 +461,7 @@
     },
     methods: {
         handleRemove(file, fileList) {
+            // if()
             this.uploadPicUrl = "";
         },
         handleExceed(files, fileList) {
@@ -472,6 +470,7 @@
             );
         },
         beforeAvatarUpload(file) {
+
             const isPNG = file.type === "image/png";
             const isJPEG = file.type === "image/jpeg";
             const isJPG = file.type === "image/jpg";
@@ -489,8 +488,12 @@
         },
         uploadSuccess(response, file, fileList) {
             console.log(fileList);
-            alert(fileList)
-            this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
+            if(this.uploadPicUrl != ""){
+                this.uploadPicUrl = this.uploadPicUrl +'|'+ `${this.qiniuaddr}/${response.key}`;
+            }else{
+                this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
+            }
+
             this.dialogVisible = true;
         },
         uploadError(err, file, fileList) {
@@ -528,36 +531,12 @@
                 });
         },
         getQiniuToken(){
+
           getToken().then(response => {
               this.QiniuData = response.data.data;
 
           });
       },
-
-      handleRemoveChange(file, fileList){
-          var filelists = [];
-          fileList.forEach(function (elem) {
-              var item = {
-                  name: elem.name,
-                  url: Config.qiniu.action + elem.name
-              }
-              filelists.push(item);
-          })
-
-          this.formData.smallModelPhoto = filelists;
-      },
-      handleSuccessChange(response, file, fileList) { //上传成功后在图片框显示图片
-          var filelists = [];
-          fileList.forEach(function (elem) {
-              var item = {
-                  name: elem.name,
-                  url: "http://img.cddwang.com" + elem.name
-              }
-              filelists.push(item);
-          })
-          this.formData.smallModelPhoto = filelists;
-      },
-
       getList() {
         this.listLoading = true;
         fetchHouseList(this.listQuery).then(response => {
@@ -682,9 +661,9 @@
         });
       },
       update() {
-        this.temp.timestamp = +this.temp.timestamp;
+        this.temp.background = this.uploadPicUrl
         updateHouse(this.temp).then(response => {
-          // this.flag = response.data.flag;
+
           if (response.data.flag === 1) {
             this.$notify({
               title: '成功',
