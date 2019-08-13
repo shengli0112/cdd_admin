@@ -425,17 +425,17 @@
         showAuditor: false,
         tableKey: 0,
 
-        accept: "image/jpeg,image/gif,image/png,image/bmp",
+        accept: 'image/jpeg,image/gif,image/png,image/bmp',
         formData: {
-            smallModelPhoto: [],
+          smallModelPhoto: []
         },
         QiniuData: {
-            token: '',
-            key: ""
+          token: '',
+          key: ''
         },
-        domain: "https://upload-z2.qiniup.com", // 七牛云的上传地址（华南区）
-        qiniuaddr: "http://img.cddwang.com", // 七牛云的图片外链地址
-        uploadPicUrl: "", //提交到后台图片地址
+        domain: 'https://upload-z2.qiniup.com', // 七牛云的上传地址（华南区）
+        qiniuaddr: 'http://img.cddwang.com', // 七牛云的图片外链地址
+        uploadPicUrl: '', // 提交到后台图片地址
         fileList: []
       }
     },
@@ -460,82 +460,79 @@
       this.getQiniuToken()
     },
     methods: {
-        handleRemove(file, fileList) {
+      handleRemove(file, fileList) {
             // if()
-            this.uploadPicUrl = "";
-        },
-        handleExceed(files, fileList) {
-            this.$message.warning(
-                `当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！`
+        this.uploadPicUrl = '';
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(
+                '当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！'
             );
-        },
-        beforeAvatarUpload(file) {
+      },
+      beforeAvatarUpload(file) {
+        const isPNG = file.type === 'image/png';
+        const isJPEG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
 
-            const isPNG = file.type === "image/png";
-            const isJPEG = file.type === "image/jpeg";
-            const isJPG = file.type === "image/jpg";
-            const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isPNG && !isJPEG && !isJPG) {
+          this.$message.error('上传头像图片只能是 jpg、png、jpeg 格式!');
+          return false;
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+          return false;
+        }
+        this.QiniuData.key = `upload_pic_${file.name}`;
+      },
+      uploadSuccess(response, file, fileList) {
+        console.log(fileList);
+        if (this.uploadPicUrl != '') {
+          this.uploadPicUrl = this.uploadPicUrl + '|' + `${this.qiniuaddr}/${response.key}`;
+        } else {
+          this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
+        }
 
-            if (!isPNG && !isJPEG && !isJPG) {
-                this.$message.error("上传头像图片只能是 jpg、png、jpeg 格式!");
-                return false;
-            }
-            if (!isLt2M) {
-                this.$message.error("上传头像图片大小不能超过 2MB!");
-                return false;
-            }
-            this.QiniuData.key = `upload_pic_${file.name}`;
-        },
-        uploadSuccess(response, file, fileList) {
-            console.log(fileList);
-            if(this.uploadPicUrl != ""){
-                this.uploadPicUrl = this.uploadPicUrl +'|'+ `${this.qiniuaddr}/${response.key}`;
-            }else{
-                this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
-            }
-
-            this.dialogVisible = true;
-        },
-        uploadError(err, file, fileList) {
-            this.$message({
-                message: "上传出错，请重试！",
-                type: "error",
-                center: true
-            });
-        },
-        beforeRemove(file, fileList) {
+        this.dialogVisible = true;
+      },
+      uploadError(err, file, fileList) {
+        this.$message({
+          message: '上传出错，请重试！',
+          type: 'error',
+          center: true
+        });
+      },
+      beforeRemove(file, fileList) {
             // return this.$confirm(`确定移除 ${ file.name }？`);
-        },
-        //提交数据到后台
-        handleSubmit() {
-            let ajaxData = {
-                receipt_img: this.uploadPicUrl //图片地址
-            };
-            this.$http.put("/xxx", ajaxData)
+      },
+        // 提交数据到后台
+      handleSubmit() {
+        const ajaxData = {
+          receipt_img: this.uploadPicUrl // 图片地址
+        };
+        this.$http.put('/xxx', ajaxData)
                 .then(response => {
-                    let { code, data } = response.data;
-                    if (code == "0") {
-                        this.$message({
-                            message: "提交成功！",
-                            type: "success",
-                            center: true
-                        });
-                    }
+                  const { code, data } = response.data;
+                  if (code == '0') {
+                    this.$message({
+                      message: '提交成功！',
+                      type: 'success',
+                      center: true
+                    });
+                  }
                 })
                 .catch(error => {
-                    this.$message({
-                        message: error.msg,
-                        type: "error",
-                        center: true
-                    });
+                  this.$message({
+                    message: error.msg,
+                    type: 'error',
+                    center: true
+                  });
                 });
-        },
-        getQiniuToken(){
-
-          getToken().then(response => {
-              this.QiniuData = response.data.data;
-
-          });
+      },
+      getQiniuToken() {
+        getToken().then(response => {
+          this.QiniuData = response.data.data;
+        });
       },
       getList() {
         this.listLoading = true;
@@ -663,7 +660,6 @@
       update() {
         this.temp.background = this.uploadPicUrl
         updateHouse(this.temp).then(response => {
-
           if (response.data.flag === 1) {
             this.$notify({
               title: '成功',

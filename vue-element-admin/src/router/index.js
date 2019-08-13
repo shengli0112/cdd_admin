@@ -63,7 +63,7 @@ export const asyncRouterMap = [
     icon: 'zonghe',
     meta: { role: ['admin'] },
     noDropdown: true,
-    children: [{ path: 'table', component: _import('example/table/table'), name: '店长审核' }]
+    children: [{ path: 'table', component: _import('examine/table/table'), name: '店长审核' }]
   },
   {
     path: '/house',
@@ -80,7 +80,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/user/',
     name: '客源管理',
-    icon: 'zonghe',
+    icon: 'user',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'table', component: _import('user/table/table'), name: '客源列表' }]
@@ -90,7 +90,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/enterprise/',
     name: '企业圈管理',
-    icon: 'zonghe',
+    icon: 'home',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'table', component: _import('enterprise/table/table'), name: '企业圈列表' }]
@@ -100,10 +100,10 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/park/',
     name: '园区管理',
-    icon: 'zujian',
+    icon: 'tab',
     children: [
-      { path: 'lease', component: _import('lease/table/table'), name: '出租园区' },
-      { path: 'sell', component: _import('sell/table/table'), name: '出售园区' },
+      { path: 'lease', component: _import('lease/table/table'), name: '出租园区', meta: { title: '出租园区', icon: 'tab' } },
+      { path: 'sell', component: _import('sell/table/table'), name: '出售园区', meta: { title: '出售园区', icon: 'tab' } },
 
     ]
   },
