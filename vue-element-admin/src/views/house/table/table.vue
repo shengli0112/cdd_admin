@@ -461,7 +461,11 @@
     },
     methods: {
       handleRemove(file, fileList) {
-            // if()
+        if(fileList !== null){
+          for(let key in fileList) {
+            this.imgsList.push(`http://${this.qiniuaddr}/${this.imgName[key]}`)
+          }
+        }
         this.uploadPicUrl = '';
       },
       handleExceed(files, fileList) {
@@ -487,7 +491,7 @@
       },
       uploadSuccess(response, file, fileList) {
         console.log(fileList);
-        if (this.uploadPicUrl != '') {
+        if (this.uploadPicUrl !== '') {
           this.uploadPicUrl = this.uploadPicUrl + '|' + `${this.qiniuaddr}/${response.key}`;
         } else {
           this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
