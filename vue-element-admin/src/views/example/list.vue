@@ -57,11 +57,11 @@
 </template>
 
 <script>
-  import { fetchList } from '@/api/article'
-  import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+  import { fetchList,getList } from 'api/article'
+  // import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
   export default {
     name: 'ArticleList',
-    components: { Pagination },
+    // components: { Pagination },
     filters: {
       statusFilter(status) {
         const statusMap = {

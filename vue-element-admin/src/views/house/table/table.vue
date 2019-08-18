@@ -22,7 +22,7 @@
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
       <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-      <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
+      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>
       <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
@@ -337,7 +337,8 @@
     cityList,
     countyList,
     townList,
-    updateHouse
+    updateHouse,
+    exportHouseList,
   } from 'api/house_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
@@ -369,6 +370,7 @@
         dialogVisible: false,
         list: null,
         total: null,
+        exportList: null,
         listLoading: true,
         listQuery: {
           page: 1,
@@ -688,22 +690,24 @@
           type: ''
         };
       },
+      exportHouse() {
+          exportHouseList(this.listQuery).then(response => {
+              this.exportList = response.data.data;
+          })
+      },
       handleDownload() {
+        this.exportHouse(),
         require.ensure([], () => {
           const { export_json_to_excel } = require('vendor/Export2Excel');
-          const tHeader = ['时间', '地区', '类型', '标题', '重要性'];
-          const filterVal = ['timestamp', 'province', 'type', 'title', 'importance'];
-          const data = this.formatJson(filterVal, this.list);
-          export_json_to_excel(tHeader, data, 'table数据');
+          const tHeader = ['标题', '租售', '类型', '区域', '总面积', '使用面积', '楼层', '价格',  '联系人', '手机号', '创建时间'];
+          const filterVal = ['title', 'houseUseType', 'houseType', 'region', 'totalArea', 'useArea', 'floor', 'price', 'concacts', 'phone', 'createTs'];
+          const data = this.formatJson(filterVal, this.exportList);
+          export_json_to_excel(tHeader, data, '厂房数据');
         })
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
-          } else {
             return v[j]
-          }
         }))
       },
       getCityList(cityName) {

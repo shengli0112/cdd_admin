@@ -1,5 +1,12 @@
 import fetch from 'utils/fetch';
 
+export function fetchList() {
+  return fetch({
+    url: '/article/list',
+    method: 'get'
+  });
+}
+
 export function getList() {
   return fetch({
     url: '/article/list',
@@ -7,10 +14,11 @@ export function getList() {
   });
 }
 
-export function getArticle() {
+export function getArticle(id) {
   return fetch({
     url: '/article/detail',
-    method: 'get'
+    method: 'get',
+    params:{id}
   });
 }
 

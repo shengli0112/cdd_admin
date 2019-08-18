@@ -70,7 +70,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/house/',
     name: '房源列表',
-    icon: 'zonghe',
+    icon: 'yinhangqia',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'table', component: _import('house/table/table'), name: '房源列表' }]
@@ -80,7 +80,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/user/',
     name: '客源管理',
-    icon: 'user',
+    icon: 'quanxian',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'table', component: _import('user/table/table'), name: '客源列表' }]
@@ -90,7 +90,7 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/enterprise/',
     name: '企业圈管理',
-    icon: 'home',
+    icon: 'theme',
     meta: { role: ['admin'] },
     noDropdown: true,
     children: [{ path: 'table', component: _import('enterprise/table/table'), name: '企业圈列表' }]
@@ -100,11 +100,41 @@ export const asyncRouterMap = [
     component: Layout,
     redirect: '/park/',
     name: '园区管理',
-    icon: 'tab',
+    icon: 'tuozhuai',
     children: [
-      { path: 'lease', component: _import('lease/table/table'), name: '出租园区', meta: { title: '出租园区', icon: 'tab' } },
-      { path: 'sell', component: _import('sell/table/table'), name: '出售园区', meta: { title: '出售园区', icon: 'tab' } },
+      { path: 'lease', component: _import('lease/table/table'), name: '出租园区', icon: 'ziliaoshouce' },
+      { path: 'sell', component: _import('sell/table/table'), name: '出售园区', icon: 'mobankuangjia' },
 
+    ]
+  },
+  {
+    path: '/toutiao',
+    component: Layout,
+    redirect: '/toutiao/',
+    name: '多多头条',
+    icon: 'wujiaoxing',
+    children: [
+      { path: 'list', component: _import('example/table/table'), name: '头条列表', icon: 'b' },
+      { path: 'create', component: _import('example/table/test'), name: '创建头条', icon: 'c' },
+      /*{
+        path: 'create',
+        component: () => import('@/views/example/create'),
+        name: 'CreateArticle',
+        meta: { title: 'Create Article', icon: 'edit' }
+      },
+      {
+        path: 'edit/:id(\\d+)',
+        component: () => import('@/views/example/edit'),
+        name: 'EditArticle',
+        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+        hidden: true
+      },
+      {
+        path: 'list',
+        component: () => import('@/views/example/list'),
+        name: 'ArticleList',
+        meta: { title: 'Article List', icon: 'list' }
+      }*/
     ]
   },
   /*{

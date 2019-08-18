@@ -8,6 +8,14 @@ export function fetchHouseList(query) {
   });
 }
 
+export function exportHouseList(query) {
+  return fetch({
+    url: '/house/exportHouse',
+    method: 'get',
+    params: query
+  });
+}
+
 export function updateHouse(data) {
   return fetch({
     url: '/house/updateHouse',
