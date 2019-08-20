@@ -88,7 +88,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="园区介绍" width="120">
+      <el-table-column align="center" label="园区介绍" width="120"  show-overflow-tooltip>
         <template scope="scope">
           <span>{{scope.row.description}}</span>
         </template>
