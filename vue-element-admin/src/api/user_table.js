@@ -8,6 +8,14 @@ export function fetchUserList(query) {
   });
 }
 
+export function fetchExportUser(query) {
+  return fetch({
+    url: '/account/exportUser',
+    method: 'get',
+    params: query
+  });
+}
+
 export function fetchPv1(pv) {
   return fetch({
     url: '/article_table/pv',

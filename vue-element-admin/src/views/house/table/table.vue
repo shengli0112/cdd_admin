@@ -142,6 +142,18 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="公司名" width="180">
+        <template scope="scope">
+          <span>{{scope.row.companyName}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="录入人" width="180">
+        <template scope="scope">
+          <span>{{scope.row.username}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="图片" width="120">
         <template scope="scope">
           <el-button  v-if="scope.row.background.length>0" :data-img="scope.row.background" type="text" size="small" @click="$imgPreview" >
@@ -151,6 +163,7 @@
         </template>
 
       </el-table-column>
+
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">

@@ -94,26 +94,6 @@
         </template>
       </el-table-column>
 
-      <!-- <el-table-column min-width="80px" label="公司名">
-         <template scope="scope">
-           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
- &lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-         </template>
-       </el-table-column>
-
-       <el-table-column width="200px" align="center" label="公司地址">
-         <template scope="scope">
-           <span>{{scope.row.address}}</span>
-         </template>
-       </el-table-column>;
-
-
-       <el-table-column width="120px" label="注册日期">
-         <template scope="scope">
-           <span>{{scope.row.registerDate}}</span>
- &lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-         </template>
-       </el-table-column>-->
 
       <el-table-column align="center" label="联系人" width="95">
         <template scope="scope">
@@ -140,7 +120,7 @@
         <template scope="scope">
           <span class="link-type" @click="handleUpdate(scope.row)">修改</span>
           <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
-          <span class="link-type" @click="handleTop(scope.row)">置顶</span>
+<!--          <span class="link-type" @click="handleTop(scope.row)">置顶</span>-->
           <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>
         </template>
       </el-table-column>
@@ -155,62 +135,58 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
+        <el-form-item label="园区名">
+          <el-input v-model="temp.parkName"></el-input>
         </el-form-item>
 
         <el-form-item label="区域">
-          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity">
+          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
             <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
-          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="请选择" @change="selectCounty">
+          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区"
+                     @change="selectCounty" label-width="70px">
             <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
-          <el-select class="filter-item" v-model="temp.town" learable filterable  placeholder="请选择" @change="selectTown">
+          <el-select class="filter-item" v-model="temp.town" learable filterable placeholder="选择镇" @change="selectTown"
+                     label-width="70px">
             <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="街道">
-          <el-input v-model="temp.street"></el-input>
+        <el-form-item label="地址">
+          <el-input v-model="temp.address"></el-input>
         </el-form-item>
 
-        <el-form-item label="房号">
-          <el-input v-model="temp.houseNumber"></el-input>
+        <el-form-item label="总面积">
+          <el-input v-model="temp.totalArea"></el-input>
         </el-form-item>
 
-        <el-form-item label="面积">
-          <el-input v-model="temp.area"></el-input>
+        <el-form-item label="单价">
+          <el-input v-model="temp.unitPrice"></el-input>
         </el-form-item>
 
-        <el-form-item label="状态">
-          <el-select class="filter-item" v-model="temp.status" placeholder="请选择">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
+        <el-form-item label="适合行业">
+          <el-input v-model="temp.industry"></el-input>
         </el-form-item>
 
-        <el-form-item label="时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="选择日期时间">
-          </el-date-picker>
+        <el-form-item label="标签">
+          <el-input v-model="temp.tag"></el-input>
         </el-form-item>
 
-
-
-        <el-form-item label="重要性">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
+        <el-form-item label="园区介绍">
+          <el-input v-model="temp.description"></el-input>
         </el-form-item>
 
-        <el-form-item label="点评">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.remark">
-          </el-input>
+        <el-form-item label="联系人">
+          <el-input v-model="temp.contacts"></el-input>
+        </el-form-item>
+
+        <el-form-item label="手机号">
+          <el-input v-model="temp.phone"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -220,22 +196,13 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"> </el-table-column>
-        <el-table-column prop="pv" label="pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
 
   </div>
 </template>
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchLeaseList,deleteLease,recoverLease,cityList,countyList,townList } from 'api/lease_park_table';
+  import { fetchLeaseList, deleteLease, recoverLease, cityList, countyList, townList } from 'api/lease_park_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -275,18 +242,17 @@
         cityList:null,
         temp: {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
-          title: '',
-          type: '',
-          city:'',
-          county:'',
-          town:'',
-          street:'',
-          houseNumber:'',
-          area:'',
-          status: 'published'
+          parkName: '',
+          city: '',
+          county: '',
+          town: '',
+          address: '',
+          totalArea: '',
+          unitPrice: '',
+          industry: '',
+          tag: '',
+          description: '',
+          phone: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,

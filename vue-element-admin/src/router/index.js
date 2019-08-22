@@ -46,6 +46,16 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/slide',
+    component: Layout,
+    redirect: '/slide/',
+    name: '轮播图管理',
+    icon: 'zujian',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('slide/table/table'), name: '轮播图管理' }]
+  },
+  {
     path: '/inform',
     component: Layout,
     redirect: '/inform/',

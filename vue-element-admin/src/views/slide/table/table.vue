@@ -39,94 +39,36 @@
         </template>
       </el-table-column>-->
 
-      <el-table-column align="center" label="园区名" width="125">
+      <el-table-column align="center" label="标题" width="125">
         <template scope="scope">
-          <span>{{scope.row.parkName}}</span>
+          <span>{{scope.row.title}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="城市" width="140">
+      <el-table-column align="center" label="轮播图跳转链接" width="140">
         <template scope="scope">
-          <span>{{scope.row.city}}-{{scope.row.county}}</span>
+          <span>{{scope.row.redirectUrl}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="区域" width="90">
+      <el-table-column align="center" label="位置" width="90">
         <template scope="scope">
-          <span>{{scope.row.town}}</span>
+          <span>{{scope.row.sequence}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="地址" width="120">
+      <el-table-column align="center" label="城市" width="90">
         <template scope="scope">
-          <span>{{scope.row.address}}</span>
+          <span>{{scope.row.city}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="总面积" width="90">
+      <el-table-column label="显示图片" width="120">
         <template scope="scope">
-          <span>{{scope.row.totalArea}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="总价" width="100">
-        <template scope="scope">
-          <span>{{scope.row.totalPrice}}</span>
+          <img :src="scope.row.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />
 
         </template>
-      </el-table-column>
 
-      <el-table-column align="center" label="适合行业" width="120">
-        <template scope="scope">
-          <span>{{scope.row.industry}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="标签" width="120">
-        <template scope="scope">
-          <span>{{scope.row.tag}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="园区介绍" width="120"  show-overflow-tooltip>
-        <template scope="scope">
-          <span>{{scope.row.description}}</span>
-        </template>
-      </el-table-column>
-
-      <!-- <el-table-column min-width="80px" label="公司名">
-         <template scope="scope">
-           <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
- &lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-         </template>
-       </el-table-column>
-
-       <el-table-column width="200px" align="center" label="公司地址">
-         <template scope="scope">
-           <span>{{scope.row.address}}</span>
-         </template>
-       </el-table-column>;
-
-
-       <el-table-column width="120px" label="注册日期">
-         <template scope="scope">
-           <span>{{scope.row.registerDate}}</span>
- &lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-         </template>
-       </el-table-column>-->
-
-      <el-table-column align="center" label="联系人" width="95">
-        <template scope="scope">
-          <span>{{scope.row.contacts}}</span>
-          <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="手机号" width="130">
-        <template scope="scope">
-          <span>{{scope.row.phone}}</span>
-          <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
-        </template>
       </el-table-column>
 
       <el-table-column align="center" label="状态" width="80">
@@ -140,7 +82,6 @@
         <template scope="scope">
           <span class="link-type" @click="handleUpdate(scope.row)">修改</span>
           <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
-          <span class="link-type" @click="handleTop(scope.row)">置顶</span>
           <span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>
         </template>
       </el-table-column>
@@ -155,61 +96,54 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="园区名">
-          <el-input v-model="temp.parkName"></el-input>
+        <el-form-item label="标题">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="区域">
-          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
-                     label-width="70px">
-            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区"
-                     @change="selectCounty" label-width="70px">
-            <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
-          <el-select class="filter-item" v-model="temp.town" learable filterable placeholder="选择镇" @change="selectTown"
-                     label-width="70px">
-            <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
+        <el-form-item label="轮播图跳转链接">
+          <el-input v-model="temp.redirectUrl"></el-input>
         </el-form-item>
 
-        <el-form-item label="地址">
-          <el-input v-model="temp.address"></el-input>
+        <el-form-item label="位置">
+          <el-input v-model="temp.sequence"></el-input>
         </el-form-item>
 
-        <el-form-item label="总面积">
-          <el-input v-model="temp.totalArea"></el-input>
+        <el-form-item label="城市">
+          <el-input v-model="temp.city"></el-input>
         </el-form-item>
 
-        <el-form-item label="总价">
-          <el-input v-model="temp.totalPrice"></el-input>
+        <el-table-column label="显示图片" width="120">
+          <template scope="scope">
+            <img :src="temp.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />
+
+          </template>
+        </el-table-column>
+
+        <el-form-item label="列表图片">
+          <el-upload
+            list-type="picture-card"
+            :action="domain"
+            :data="QiniuData"
+            :on-remove="handleRemove"
+            :on-error="uploadError"
+            :on-success="uploadSuccess"
+            :before-remove="beforeRemove"
+            :before-upload="beforeAvatarUpload"
+            :limit="1"
+            multiple
+            :on-exceed="handleExceed"
+            :file-list="fileList"
+          >
+            <!--            <el-button size="small" type="primary">选择图片</el-button>-->
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <!--          <el-dialog :visible.sync="dialogVisible">-->
+          <!--            <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
+          <!--          </el-dialog>-->
+          <!--          <div>-->
+          <!--            <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
+          <!--          </div>-->
         </el-form-item>
-
-        <el-form-item label="适合行业">
-          <el-input v-model="temp.industry"></el-input>
-        </el-form-item>
-
-        <el-form-item label="标签">
-          <el-input v-model="temp.tag"></el-input>
-        </el-form-item>
-
-        <el-form-item label="园区介绍">
-          <el-input v-model="temp.description"></el-input>
-        </el-form-item>
-
-        <el-form-item label="联系人">
-          <el-input v-model="temp.contacts"></el-input>
-        </el-form-item>
-
-        <el-form-item label="手机号">
-          <el-input v-model="temp.phone"></el-input>
-        </el-form-item>
-
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -218,15 +152,17 @@
       </div>
     </el-dialog>
 
+
   </div>
 </template>
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchSellList, deleteSell, recoverSell, cityList, countyList, townList } from 'api/sell_park_table';
+  import { fetchSlideList, deleteSlide, recoverSlide, cityList, countyList, townList } from 'api/slide_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
+  import { getToken } from 'api/qiniu';
   const calendarTypeOptions = [
     { key: 'CN', display_name: '中国' },
     { key: 'US', display_name: '美国' },
@@ -263,17 +199,11 @@
         cityList:null,
         temp: {
           id: undefined,
-          parkName: '',
+          title: '',
+          redirectUrl: '',
+          sequence: 0,
           city: '',
-          county: '',
-          town: '',
-          address: '',
-          totalArea: '',
-          totalPrice: '',
-          industry: '',
-          tag: '',
-          description: '',
-          phone: ''
+          slideUrl: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
@@ -311,10 +241,88 @@
       this.getCityList()
     },
     methods: {
+      handleRemove(file, fileList) {
+        if(fileList !== null){
+          for(let key in fileList) {
+            this.imgsList.push(`http://${this.qiniuaddr}/${this.imgName[key]}`)
+          }
+        }
+        this.uploadPicUrl = '';
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(
+          '当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！'
+        );
+      },
+      beforeAvatarUpload(file) {
+        const isPNG = file.type === 'image/png';
+        const isJPEG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isPNG && !isJPEG && !isJPG) {
+          this.$message.error('上传头像图片只能是 jpg、png、jpeg 格式!');
+          return false;
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+          return false;
+        }
+        this.QiniuData.key = `upload_pic_${file.name}`;
+      },
+      uploadSuccess(response, file, fileList) {
+        console.log(fileList);
+        if (this.uploadPicUrl !== '') {
+          this.uploadPicUrl = this.uploadPicUrl + '|' + `${this.qiniuaddr}/${response.key}`;
+        } else {
+          this.uploadPicUrl = `${this.qiniuaddr}/${response.key}`;
+        }
+
+        this.dialogVisible = true;
+      },
+      uploadError(err, file, fileList) {
+        this.$message({
+          message: '上传出错，请重试！',
+          type: 'error',
+          center: true
+        });
+      },
+      beforeRemove(file, fileList) {
+        // return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      // 提交数据到后台
+      handleSubmit() {
+        const ajaxData = {
+          receipt_img: this.uploadPicUrl // 图片地址
+        };
+        this.$http.put('/xxx', ajaxData)
+          .then(response => {
+            const { code, data } = response.data;
+            if (code == '0') {
+              this.$message({
+                message: '提交成功！',
+                type: 'success',
+                center: true
+              });
+            }
+          })
+          .catch(error => {
+            this.$message({
+              message: error.msg,
+              type: 'error',
+              center: true
+            });
+          });
+      },
+      getQiniuToken() {
+        getToken().then(response => {
+          this.QiniuData = response.data.data;
+        });
+      },
       getList() {
         this.listLoading = true;
-        fetchSellList(this.listQuery).then(response => {
-          this.list = response.data.data.sellParkList;
+        fetchSlideList(this.listQuery).then(response => {
+          this.list = response.data.data.slideList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
@@ -362,12 +370,12 @@
         this.dialogFormVisible = true;
       },
       handleRecover(row) {
-        MessageBox.confirm('您确定恢复该园区么', '确定', {
+        MessageBox.confirm('您确定恢复该轮播图么', '确定', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          recoverSell(row.id).then(response => {
+          recoverSlide(row.id).then(response => {
             // this.flag = response.data.flag;
             if(response.data.flag  == 1){
               this.$notify({
@@ -381,33 +389,13 @@
           })
         })
       },
-      handleTop(row) {
-        MessageBox.confirm('您确定置顶该房源么', '确定', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          topHouse(row.id).then(response => {
-            // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
-              this.$notify({
-                title: '成功',
-                message: '置顶成功',
-                type: 'success',
-                duration: 2000
-              });
-              this.getList();
-            }
-          })
-        })
-      },
       handleDelete(row) {
-        MessageBox.confirm('您确定删除该园区么', '确定删除', {
+        MessageBox.confirm('您确定删除该轮播图么', '确定删除', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteSell(row.id).then(response => {
+          deleteSlide(row.id).then(response => {
             // this.flag = response.data.flag;
             if(response.data.flag == 1){
               this.$notify({

@@ -33,7 +33,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="举报信息" width="125">
+      <el-table-column align="center" label="举报信息" width="125" show-overflow-tooltip>
           <template scope="scope">
             <span>{{scope.row.informInfo}}</span>
           </template>

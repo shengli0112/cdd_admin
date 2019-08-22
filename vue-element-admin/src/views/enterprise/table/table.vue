@@ -100,28 +100,6 @@
       </el-table-column>
 
 
-     <!-- <el-table-column min-width="80px" label="公司名">
-        <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.companyName}}</span>
-&lt;!&ndash;          <el-tag>{{scope.row.type | typeFilter}}</el-tag>&ndash;&gt;
-        </template>
-      </el-table-column>
-
-      <el-table-column width="200px" align="center" label="公司地址">
-        <template scope="scope">
-          <span>{{scope.row.address}}</span>
-        </template>
-      </el-table-column>;
-
-
-      <el-table-column width="120px" label="注册日期">
-        <template scope="scope">
-          <span>{{scope.row.registerDate}}</span>
-&lt;!&ndash;          <icon-svg v-for="n in +scope.row.importance" icon-class="wujiaoxing" class="meta-item__icon" :key="n"></icon-svg>&ndash;&gt;
-        </template>
-      </el-table-column>-->
-
-
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
@@ -148,11 +126,20 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="类型">
-          <el-select class="filter-item" v-model="temp.type" placeholder="请选择">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
-            </el-option>
-          </el-select>
+        <el-form-item label="企业名">
+          <el-input v-model="temp.enterpriseName"></el-input>
+        </el-form-item>
+
+        <el-form-item label="标题">
+          <el-input v-model="temp.title"></el-input>
+        </el-form-item>
+
+        <el-form-item label="主营业务">
+          <el-input v-model="temp.mainBusiness"></el-input>
+        </el-form-item>
+
+        <el-form-item label="行业">
+          <el-input v-model="temp.mainBusiness"></el-input>
         </el-form-item>
 
         <el-form-item label="状态">
@@ -167,9 +154,7 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
+
 
         <el-form-item label="重要性">
           <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
