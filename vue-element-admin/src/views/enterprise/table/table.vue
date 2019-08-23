@@ -142,28 +142,28 @@
           <el-input v-model="temp.mainBusiness"></el-input>
         </el-form-item>
 
-        <el-form-item label="状态">
-          <el-select class="filter-item" v-model="temp.status" placeholder="请选择">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
-            </el-option>
-          </el-select>
+        <el-form-item label="地址">
+          <el-input v-model="temp.address"></el-input>
         </el-form-item>
 
-        <el-form-item label="时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="选择日期时间">
-          </el-date-picker>
+        <el-form-item label="注册日期">
+          <el-input v-model="temp.registerDate"></el-input>
+        </el-form-item>
+
+        <el-form-item label="联系人">
+          <el-input v-model="temp.contacts"></el-input>
+        </el-form-item>
+
+        <el-form-item label="手机号">
+          <el-input v-model="temp.phone"></el-input>
+        </el-form-item>
+
+        <el-form-item label="价格">
+          <el-input v-model="temp.price"></el-input>
         </el-form-item>
 
 
 
-        <el-form-item label="重要性">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
-        </el-form-item>
-
-        <el-form-item label="点评">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.remark">
-          </el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -172,15 +172,6 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="阅读数统计" :visible.sync="dialogPvVisible" size="small">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="渠道"> </el-table-column>
-        <el-table-column prop="pv" label="pv"> </el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
 
   </div>
 </template>
@@ -226,12 +217,14 @@
         },
         temp: {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
+          enterpriseName: '',
           title: '',
-          type: '',
-          status: 'published'
+          mainBusiness: '',
+          address: '',
+          registerDate: '',
+          contacts: '',
+          phone: '',
+          price: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,

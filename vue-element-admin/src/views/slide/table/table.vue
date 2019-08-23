@@ -112,12 +112,12 @@
           <el-input v-model="temp.city"></el-input>
         </el-form-item>
 
-        <el-table-column label="显示图片" width="120">
-          <template scope="scope">
-            <img :src="temp.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />
+<!--        <el-form-item label="显示图片" width="120">-->
+<!--          <template scope="scope">-->
+<!--            <img :src="temp.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />-->
 
-          </template>
-        </el-table-column>
+<!--          </template>-->
+<!--        </el-form-item>-->
 
         <el-form-item label="列表图片">
           <el-upload

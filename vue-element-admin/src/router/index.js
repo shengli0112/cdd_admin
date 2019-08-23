@@ -26,7 +26,7 @@ export const constantRouterMap = [
     redirect: '/dashboard',
     name: '首页',
     hidden: true,
-    children: [{ path: 'dashboard', component: _import('dashboard/index') }]
+    children: [{ path: 'dashboard', component: _import('dashboard/index'), name: '首页' }]
   },
   {
     path: '/introduction',
