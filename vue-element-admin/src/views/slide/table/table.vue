@@ -20,7 +20,7 @@
       <!--      </el-select>-->
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-      <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
+            <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>
       <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
       <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
@@ -71,6 +71,18 @@
 
       </el-table-column>
 
+      <el-table-column align="center" label="创建时间" width="180">
+        <template scope="scope">
+          <span>{{scope.row.createTs | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="更新时间" width="180">
+        <template scope="scope">
+          <span>{{scope.row.updateTs | parseTime('{y}-{m}-{d} {h}:{i}:{s}')}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
           <span v-if="scope.row.status=='1'">可用</span>
@@ -119,7 +131,7 @@
 <!--          </template>-->
 <!--        </el-form-item>-->
 
-        <el-form-item label="列表图片">
+        <el-form-item label="展示图片">
           <el-upload
             list-type="picture-card"
             :action="domain"
@@ -137,12 +149,12 @@
             <!--            <el-button size="small" type="primary">选择图片</el-button>-->
             <i class="el-icon-plus"></i>
           </el-upload>
-          <!--          <el-dialog :visible.sync="dialogVisible">-->
-          <!--            <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
-          <!--          </el-dialog>-->
-          <!--          <div>-->
-          <!--            <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
-          <!--          </div>-->
+<!--                    <el-dialog :visible.sync="dialogVisible">-->
+<!--                      <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
+<!--                    </el-dialog>-->
+<!--                    <div>-->
+<!--                      <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
+<!--                    </div>-->
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -158,7 +170,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchSlideList, deleteSlide, recoverSlide, cityList, countyList, townList } from 'api/slide_table';
+  import { fetchSlideList, deleteSlide, recoverSlide, createSlide,updateSlide, cityList, countyList, townList } from 'api/slide_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -218,7 +230,20 @@
         dialogPvVisible: false,
         pvData: [],
         showAuditor: false,
-        tableKey: 0
+        tableKey: 0,
+        uploadPicUrl: '',
+        accept: 'image/jpeg,image/gif,image/png,image/bmp',
+        formData: {
+            smallModelPhoto: []
+        },
+        QiniuData: {
+            token: '',
+            key: ''
+        },
+        domain: 'https://upload-z2.qiniup.com', // 七牛云的上传地址（华南区）
+        qiniuaddr: 'http://img.cddwang.com', // 七牛云的图片外链地址
+        uploadPicUrl: '', // 提交到后台图片地址
+        fileList: []
       }
     },
     created() {
@@ -238,7 +263,8 @@
       }
     },
     mounted(){
-      this.getCityList()
+      this.getCityList(),
+      this.getQiniuToken()
     },
     methods: {
       handleRemove(file, fileList) {
@@ -410,44 +436,47 @@
         })
       },
       create() {
-        this.temp.id = parseInt(Math.random() * 100) + 1024;
-        this.temp.timestamp = +new Date();
-        this.temp.author = '原创作者';
-        this.list.unshift(this.temp);
-        this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        });
+          this.temp.slideUrl = this.uploadPicUrl
+          createSlide(this.temp).then(response => {
+              if (response.data.flag === 1) {
+                  this.$notify({
+                      title: '成功',
+                      message: response.data.message,
+                      type: 'success',
+                      duration: 2000
+                  });
+                  this.resetTemp();
+                  this.dialogFormVisible  = false;
+                  this.getList()
+              }
+          })
+          this.getList()
       },
       update() {
-        this.temp.timestamp = +this.temp.timestamp;
-        for (const v of this.list) {
-          if (v.id === this.temp.id) {
-            const index = this.list.indexOf(v);
-            this.list.splice(index, 1, this.temp);
-            break;
-          }
-        }
-        this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        });
+          this.temp.slideUrl = this.uploadPicUrl
+          updateSlide(this.temp).then(response => {
+              if (response.data.flag === 1) {
+                  this.$notify({
+                      title: '成功',
+                      message: response.data.message,
+                      type: 'success',
+                      duration: 2000
+                  });
+                  this.resetTemp();
+                  this.dialogFormVisible  = false;
+                  this.getList()
+              }
+          })
+
       },
       resetTemp() {
         this.temp = {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
           title: '',
-          status: 'published',
-          type: ''
+          redirectUrl: '',
+          sequence: 0,
+          city: '',
+          slideUrl: ''
         };
       },
       handleDownload() {
