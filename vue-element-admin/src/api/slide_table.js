@@ -1,5 +1,21 @@
 import fetch from 'utils/fetch';
 
+export function createSlide(data) {
+  return fetch({
+    url: '/slide/addSlide',
+    method: 'post',
+    data
+  });
+}
+
+export function updateSlide(data) {
+  return fetch({
+    url: '/slide/updateSlide',
+    method: 'post',
+    data
+  });
+}
+
 export function fetchSlideList(query) {
   return fetch({
     url: '/slide/slideList',
