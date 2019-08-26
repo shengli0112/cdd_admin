@@ -1,7 +1,8 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词" v-model="listQuery.keyword">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="关键词"
+                v-model="listQuery.keyword">
       </el-input>
 
       <!--      <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" placeholder="重要性">-->
@@ -21,15 +22,16 @@
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
       <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-      <!--      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
+      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>
       <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
-    <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
+    <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row
+              style="width: 100%">
 
       <el-table-column align="center" label="序号" width="65">
         <template scope="scope">
-          <span>{{scope.row.id}}</span>
+          <span>{{scope.row.entrustId}}</span>
         </template>
       </el-table-column>
 
@@ -39,37 +41,61 @@
         </template>
       </el-table-column>-->
 
-      <el-table-column align="center" label="标题" width="125">
+      <el-table-column align="center" label="地址" width="125">
         <template scope="scope">
-          <span>{{scope.row.title}}</span>
+          <span>{{scope.row.address}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="轮播图跳转链接" width="140">
+      <el-table-column align="center" label="租售" width="65">
         <template scope="scope">
-          <span>{{scope.row.redirectUrl}}</span>
+          <span>{{scope.row.entrustUseType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="位置" width="90">
+      <el-table-column align="center" label="类型" width="65">
         <template scope="scope">
-          <span>{{scope.row.sequence}}</span>
+          <span>{{scope.row.entrustType}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="城市" width="90">
+
+      <el-table-column align="center" label="面积" width="90">
         <template scope="scope">
-          <span>{{scope.row.city}}</span>
+          <span v-if="scope.row.entrustType=='土地'">{{scope.row.area}}亩</span>
+          <span v-if="scope.row.entrustType=='厂房'">{{scope.row.area}}㎡</span>
+          <span v-if="scope.row.entrustType=='仓库'">{{scope.row.area}}㎡</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="显示图片" width="120">
+
+      <el-table-column align="center" label="联系人" width="95">
         <template scope="scope">
-          <img :src="scope.row.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />
-
+          <span>{{scope.row.contacts}}</span>
+          <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
         </template>
-
       </el-table-column>
+
+      <el-table-column align="center" label="手机号" width="130">
+        <template scope="scope">
+          <span>{{scope.row.phone}}</span>
+          <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="录入人" width="180">
+        <template scope="scope">
+          <span>{{scope.row.username}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="创建时间" width="180">
+        <template scope="scope">
+          <span>{{scope.row.createTs}}</span>
+        </template>
+      </el-table-column>
+
+
 
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
@@ -89,42 +115,125 @@
     </el-table>
 
     <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
-                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                     :current-page.sync="listQuery.page"
+                     :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit"
+                     layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+      <el-form class="small-space" :model="temp" label-position="left" label-width="70px"
+               style='width: 400px; margin-left:50px;'>
         <el-form-item label="标题">
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="轮播图跳转链接">
-          <el-input v-model="temp.redirectUrl"></el-input>
+        <el-form-item label="标题">
+          <el-input v-model="temp.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="位置">
-          <el-input v-model="temp.sequence"></el-input>
+        <el-form-item label="区域">
+          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
+            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区"
+                     @change="selectCounty" label-width="70px">
+            <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+          <el-select class="filter-item" v-model="temp.town" learable filterable placeholder="选择镇" @change="selectTown"
+                     label-width="70px">
+            <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
         </el-form-item>
 
-        <el-form-item label="城市">
-          <el-input v-model="temp.city"></el-input>
+        <el-form-item label="街道">
+          <el-input v-model="temp.street"></el-input>
         </el-form-item>
 
-        <el-form-item label="是否只有经纪人可看">
-          <el-input type="radio" id="yes" value="1" v-model="temp.isLook"/>是
-          <el-input type="radio" id="no" value="0" v-model="temp.isLook"/>否
+        <el-form-item label="房号">
+          <el-input v-model="temp.houseNumber"></el-input>
         </el-form-item>
 
-<!--        <el-form-item label="显示图片" width="120">-->
-<!--          <template scope="scope">-->
-<!--            <img :src="temp.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />-->
+        <el-form-item label="面积">
+          <el-input v-model="temp.area"></el-input>
+        </el-form-item>
 
-<!--          </template>-->
-<!--        </el-form-item>-->
+        <el-form-item label="售价">
+          <el-input v-model="temp.sellingPrice"></el-input>
+        </el-form-item>
 
-        <el-form-item label="列表图片">
+        <el-form-item label="电力">
+          <el-input v-model="temp.electricity"></el-input>
+        </el-form-item>
+
+        <el-form-item label="房源类型">
+          <el-input v-model="temp.houseType"></el-input>
+        </el-form-item>
+
+        <el-form-item label="房源使用类型">
+          <el-input v-model="temp.houseUseType"></el-input>
+        </el-form-item>
+
+        <el-form-item label="楼层">
+          <el-input v-model="temp.floor"></el-input>
+        </el-form-item>
+
+        <el-form-item label="消防">
+          <el-input v-model="temp.fireControl"></el-input>
+        </el-form-item>
+
+
+        <el-form-item label="房源状态">
+          <el-input v-model="temp.houseStatus"></el-input>
+        </el-form-item>
+
+        <el-form-item label="占地">
+          <el-input v-model="temp.coverArea"></el-input>
+        </el-form-item>
+
+        <el-form-item label="房源优势">
+          <el-input v-model="temp.houseEdge"></el-input>
+        </el-form-item>
+
+        <el-form-item label="单价">
+          <el-input v-model="temp.singlePrice"></el-input>
+          {{temp.priceType}}
+        </el-form-item>
+
+        <el-form-item label="到期时间">
+          <el-input v-model="temp.expireDate"></el-input>
+        </el-form-item>
+
+
+        <el-form-item label="描述">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"
+                    v-model="temp.description">
+          </el-input>
+        </el-form-item>
+
+
+       <!-- <el-form-item label="缩略图" prop="smallModelPhoto">
+          <el-upload
+            action="http://img.cddwang.com"
+            :accept="accept"
+            list-type="picture"
+            :limit=1
+            :data="uptoken"
+            :before-upload="beforeAvatarUpload"
+            :on-remove="handleRemoveChange"
+            :on-success="handleSuccessChange"
+            :file-list="formData.smallModelPhoto">
+            <el-button size="mini" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif文件，且单张不超过10M，缩略图只能传一张</div>
+          </el-upload>
+        </el-form-item>-->
+
+        <el-form-item label="图片">
           <el-upload
             list-type="picture-card"
             :action="domain"
@@ -134,21 +243,22 @@
             :on-success="uploadSuccess"
             :before-remove="beforeRemove"
             :before-upload="beforeAvatarUpload"
-            :limit="1"
+            :limit="3"
             multiple
             :on-exceed="handleExceed"
             :file-list="fileList"
           >
-            <!--            <el-button size="small" type="primary">选择图片</el-button>-->
+<!--            <el-button size="small" type="primary">选择图片</el-button>-->
             <i class="el-icon-plus"></i>
           </el-upload>
-          <!--          <el-dialog :visible.sync="dialogVisible">-->
-          <!--            <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
-          <!--          </el-dialog>-->
-          <!--          <div>-->
-          <!--            <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
-          <!--          </div>-->
+<!--          <el-dialog :visible.sync="dialogVisible">-->
+<!--            <img width="100%" :src="uploadPicUrl" alt="" v-if="uploadPicUrl">-->
+<!--          </el-dialog>-->
+<!--          <div>-->
+<!--            <img class="pic-box" :src="uploadPicUrl" v-if="uploadPicUrl">-->
+<!--          </div>-->
         </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -163,16 +273,25 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchSlideList, deleteSlide, recoverSlide, cityList, countyList, townList } from 'api/slide_table';
+  import {
+    fetchEntrustList,
+    deleteEntrust,
+    recoverEntrust,
+    cityList,
+    countyList,
+    townList,
+    updateEntrust
+  } from 'api/house_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
-  import { getToken } from 'api/qiniu';
+  import { getToken } from 'api/qiniu'
+
   const calendarTypeOptions = [
-    { key: 'CN', display_name: '中国' },
-    { key: 'US', display_name: '美国' },
-    { key: 'JP', display_name: '日本' },
-    { key: 'EU', display_name: '欧元区' }
+      { key: 'CN', display_name: '中国' },
+      { key: 'US', display_name: '美国' },
+      { key: 'JP', display_name: '日本' },
+      { key: 'EU', display_name: '欧元区' }
   ];
 
 
@@ -190,8 +309,10 @@
     },
     data() {
       return {
+        dialogVisible: false,
         list: null,
         total: null,
+        exportList: null,
         listLoading: true,
         listQuery: {
           page: 1,
@@ -201,15 +322,37 @@
           type: undefined,
           sort: '+id'
         },
-        cityList:null,
+        cityList: null,
+        countyList: null,
+        townList: null,
         temp: {
           id: undefined,
           title: '',
-          redirectUrl: '',
-          sequence: 0,
+          type: '',
           city: '',
-          slideUrl: '',
-          isLook: 0
+          county: '',
+          town: '',
+          street: '',
+          houseNumber: '',
+          area: '',
+          sellingPrice: '',
+          electricity: '',
+          contacts: '',
+          phone: '',
+          houseType: '',
+          houseUseType: '',
+          floor: '',
+          fireControl: '',
+          background: '',
+          houseStatus: '',
+          coverArea: '',
+          houseEdge: '',
+          singlePrice: '',
+          useArea: '',
+          signContract: '',
+          description: '',
+          trade: '',
+          expireDate: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
@@ -224,7 +367,20 @@
         dialogPvVisible: false,
         pvData: [],
         showAuditor: false,
-        tableKey: 0
+        tableKey: 0,
+
+        accept: 'image/jpeg,image/gif,image/png,image/bmp',
+        formData: {
+          smallModelPhoto: []
+        },
+        QiniuData: {
+          token: '',
+          key: ''
+        },
+        domain: 'https://upload-z2.qiniup.com', // 七牛云的上传地址（华南区）
+        qiniuaddr: 'http://img.cddwang.com', // 七牛云的图片外链地址
+        uploadPicUrl: '', // 提交到后台图片地址
+        fileList: []
       }
     },
     created() {
@@ -243,8 +399,9 @@
         return calendarTypeKeyValue[type]
       }
     },
-    mounted(){
-      this.getCityList()
+    mounted() {
+      this.getCityList(),
+      this.getQiniuToken()
     },
     methods: {
       handleRemove(file, fileList) {
@@ -257,8 +414,8 @@
       },
       handleExceed(files, fileList) {
         this.$message.warning(
-          '当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！'
-        );
+                '当前限制选择 3 张图片，如需更换，请删除上一张图片在重新选择！'
+            );
       },
       beforeAvatarUpload(file) {
         const isPNG = file.type === 'image/png';
@@ -294,31 +451,31 @@
         });
       },
       beforeRemove(file, fileList) {
-        // return this.$confirm(`确定移除 ${ file.name }？`);
+            // return this.$confirm(`确定移除 ${ file.name }？`);
       },
-      // 提交数据到后台
+        // 提交数据到后台
       handleSubmit() {
         const ajaxData = {
           receipt_img: this.uploadPicUrl // 图片地址
         };
         this.$http.put('/xxx', ajaxData)
-          .then(response => {
-            const { code, data } = response.data;
-            if (code == '0') {
-              this.$message({
-                message: '提交成功！',
-                type: 'success',
-                center: true
-              });
-            }
-          })
-          .catch(error => {
-            this.$message({
-              message: error.msg,
-              type: 'error',
-              center: true
-            });
-          });
+                .then(response => {
+                  const { code, data } = response.data;
+                  if (code == '0') {
+                    this.$message({
+                      message: '提交成功！',
+                      type: 'success',
+                      center: true
+                    });
+                  }
+                })
+                .catch(error => {
+                  this.$message({
+                    message: error.msg,
+                    type: 'error',
+                    center: true
+                  });
+                });
       },
       getQiniuToken() {
         getToken().then(response => {
@@ -327,8 +484,8 @@
       },
       getList() {
         this.listLoading = true;
-        fetchSlideList(this.listQuery).then(response => {
-          this.list = response.data.data.slideList;
+        fetchEntrustList(this.listQuery).then(response => {
+          this.list = response.data.data.entrustInfoList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
@@ -376,14 +533,14 @@
         this.dialogFormVisible = true;
       },
       handleRecover(row) {
-        MessageBox.confirm('您确定恢复该轮播图么', '确定', {
+        MessageBox.confirm('您确定恢复该委托么', '确定', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          recoverSlide(row.id).then(response => {
+          recoverEntrust(row.entrustId).then(response => {
             // this.flag = response.data.flag;
-            if(response.data.flag  == 1){
+            if (response.data.flag === 1) {
               this.$notify({
                 title: '成功',
                 message: '恢复成功',
@@ -396,14 +553,14 @@
         })
       },
       handleDelete(row) {
-        MessageBox.confirm('您确定删除该轮播图么', '确定删除', {
+        MessageBox.confirm('您确定删除该委托么', '确定删除', {
           confirmButtonText: '确定删除',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          deleteSlide(row.id).then(response => {
+          deleteEntrust(row.entrustId).then(response => {
             // this.flag = response.data.flag;
-            if(response.data.flag == 1){
+            if (response.data.flag === 1) {
               this.$notify({
                 title: '成功',
                 message: '删除成功',
@@ -429,21 +586,19 @@
         });
       },
       update() {
-        this.temp.timestamp = +this.temp.timestamp;
-        for (const v of this.list) {
-          if (v.id === this.temp.id) {
-            const index = this.list.indexOf(v);
-            this.list.splice(index, 1, this.temp);
-            break;
+        updateEntrust(this.temp).then(response => {
+          if (response.data.flag === 1) {
+            this.$notify({
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
+              duration: 2000
+            });
+            this.getList();
           }
-        }
+        })
+
         this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        });
       },
       resetTemp() {
         this.temp = {
@@ -456,27 +611,30 @@
           type: ''
         };
       },
+      exportHouse() {
+          exportHouseList(this.listQuery).then(response => {
+              this.exportList = response.data.data;
+          })
+      },
       handleDownload() {
+        this.exportHouse(),
         require.ensure([], () => {
           const { export_json_to_excel } = require('vendor/Export2Excel');
-          const tHeader = ['时间', '地区', '类型', '标题', '重要性'];
-          const filterVal = ['timestamp', 'province', 'type', 'title', 'importance'];
-          const data = this.formatJson(filterVal, this.list);
-          export_json_to_excel(tHeader, data, 'table数据');
+          const tHeader = ['标题', '租售', '类型', '区域', '总面积', '使用面积', '楼层', '价格',  '联系人', '手机号', '创建时间'];
+          const filterVal = ['title', 'houseUseType', 'houseType', 'region', 'totalArea', 'useArea', 'floor', 'price', 'concacts', 'phone', 'createTs'];
+          const data = this.formatJson(filterVal, this.exportList);
+          export_json_to_excel(tHeader, data, '厂房数据');
         })
       },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
-          if (j === 'timestamp') {
-            return parseTime(v[j])
-          } else {
             return v[j]
-          }
         }))
       },
-      getCityList(cityName){
+      getCityList(cityName) {
         // let cityName = this.$route.query.city
-
+        this.temp.county = ''
+        this.temp.town = ''
         cityList().then(response => {
           this.cityList = response.data.data;
         })
@@ -484,36 +642,36 @@
         this.getCountyList()
       },
 
-      getCountyList(countyName){
+      getCountyList(countyName) {
         // alert(this.city)
+        this.temp.town = ''
         countyList(this.city).then(response => {
           this.countyList = response.data.data;
         })
         this.county = countyName
         this.getTownList()
       },
-      getTownList(){
+      getTownList() {
         // alert(this.county)
         townList(this.county).then(response => {
           this.townList = response.data.data;
         })
       },
-      selectCity(val){
-
+      selectCity(val) {
         this.cityList = []
         this.countyList = []
         this.townList = []
         this.getCityList(val)
       },
-      selectCounty(val){
+      selectCounty(val) {
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
       },
-      selectTown(val){
+      selectTown(val) {
         this.townList = []
-
-      },
+        this.getTownList(val);
+      }
     }
   }
 </script>
