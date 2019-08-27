@@ -129,7 +129,7 @@
         <el-form-item label="位置">
           <el-select v-model="temp.position" clearable filterable placeholder="请选择"
                      label-width="70px">
-            <el-option v-for="item in  positionList" :key="item" :label="item" :value="item">
+            <el-option v-for="position in  positionList" :key="position" :label="position" :value="position">
             </el-option>
           </el-select>
 
@@ -145,7 +145,7 @@
         </el-form-item>
 
         <el-form-item label="是否只有经纪人可看">
-          <el-radio-group v-model="this.isLook">
+          <el-radio-group v-model="temp.isLook">
             <el-radio :label="0">否</el-radio>
             <el-radio :label="1">是</el-radio>
 
