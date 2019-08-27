@@ -69,6 +69,13 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="是否只有经纪人可看" width="90">
+        <template scope="scope">
+          <span v-if="scope.row.isLook == 0 ">否</span>
+          <span v-if="scope.row.isLook == 1 ">是</span>
+        </template>
+      </el-table-column>
+
       <el-table-column label="显示图片" width="120">
         <template scope="scope">
           <img :src="scope.row.slideUrl"  min-width="70" height="70" v-if="scope.row.slideUrl.length>0" :data-img="scope.row.slideUrl" type="text" size="small" @click="$imgPreview" />
