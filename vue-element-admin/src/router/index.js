@@ -46,6 +46,16 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/entrust',
+    component: Layout,
+    redirect: '/entrust/',
+    name: '委托管理',
+    icon: 'zujian',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('entrust/table/table'), name: '委托管理' }]
+  },
+  {
     path: '/slide',
     component: Layout,
     redirect: '/slide/',

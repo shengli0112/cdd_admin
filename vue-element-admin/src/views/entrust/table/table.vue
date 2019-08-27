@@ -281,7 +281,7 @@
     countyList,
     townList,
     updateEntrust
-  } from 'api/house_table';
+  } from 'api/entrust_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
