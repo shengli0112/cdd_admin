@@ -83,11 +83,11 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="录入人" width="180">
-        <template scope="scope">
-          <span>{{scope.row.username}}</span>
-        </template>
-      </el-table-column>
+<!--      <el-table-column align="center" label="录入人" width="180">-->
+<!--        <template scope="scope">-->
+<!--          <span>{{scope.row.username}}</span>-->
+<!--        </template>-->
+<!--      </el-table-column>-->
 
       <el-table-column align="center" label="创建时间" width="180">
         <template scope="scope">

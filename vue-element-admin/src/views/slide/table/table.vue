@@ -145,8 +145,10 @@
         </el-form-item>
 
         <el-form-item label="是否只有经纪人可看">
-          <el-input type="radio" id="yes" value="1" v-model="temp.isLook"/>是
-          <el-input type="radio" id="no" value="0" v-model="temp.isLook"/>否
+          <el-radio-group v-model="this.isLook">
+            <el-radio :label="1">是</el-radio>
+            <el-radio :label="0">否</el-radio>
+          </el-radio-group>
         </el-form-item>
 
 <!--        <el-form-item label="显示图片" width="120">-->

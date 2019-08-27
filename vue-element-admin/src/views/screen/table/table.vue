@@ -328,8 +328,8 @@
       },
       getList() {
         this.listLoading = true;
-        fetchSlideList(this.listQuery).then(response => {
-          this.list = response.data.data.slideList;
+        fetchOpenScreenList(this.listQuery).then(response => {
+          this.list = response.data.data.openScreenList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
