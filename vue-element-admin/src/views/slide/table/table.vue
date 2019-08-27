@@ -127,7 +127,7 @@
         </el-form-item>
 
         <el-form-item label="位置">
-          <el-select class="filter-item" v-model="temp.position" clearable filterable placeholder="请选择" @change="selectCity"
+          <el-select v-model="temp.position" clearable filterable placeholder="请选择"
                      label-width="70px">
             <el-option v-for="item in  positionList" :key="item" :label="item" :value="item">
             </el-option>
@@ -136,7 +136,7 @@
         </el-form-item>
 
         <el-form-item label="城市">
-          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+          <el-select v-model="temp.city" clearable filterable placeholder="请选择"
                      label-width="70px">
             <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
             </el-option>
