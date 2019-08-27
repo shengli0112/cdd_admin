@@ -51,9 +51,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="位置" width="90">
+      <el-table-column align="center" label="顺序" width="90">
         <template scope="scope">
           <span>{{scope.row.sequence}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="位置" width="90">
+        <template scope="scope">
+          <span>{{scope.row.position}}</span>
         </template>
       </el-table-column>
 
@@ -116,12 +122,26 @@
           <el-input v-model="temp.redirectUrl"></el-input>
         </el-form-item>
 
-        <el-form-item label="位置">
+        <el-form-item label="顺序">
           <el-input v-model="temp.sequence"></el-input>
         </el-form-item>
 
+        <el-form-item label="位置">
+          <el-select class="filter-item" v-model="temp.position" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
+            <el-option v-for="item in  positionList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+
+        </el-form-item>
+
         <el-form-item label="城市">
-          <el-input v-model="temp.city"></el-input>
+          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
+            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
+
         </el-form-item>
 
         <el-form-item label="是否只有经纪人可看">
@@ -175,7 +195,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchSlideList, deleteSlide, recoverSlide, createSlide,updateSlide, cityList, countyList, townList } from 'api/slide_table';
+  import { fetchSlideList, deleteSlide, recoverSlide, createSlide,updateSlide, cityList, countyList, townList, fetchSlidePositionList } from 'api/slide_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -213,7 +233,8 @@
           type: undefined,
           sort: '+id'
         },
-        cityList:null,
+        cityList: null,
+        positionList: null,
         temp: {
           id: undefined,
           title: '',
@@ -221,7 +242,8 @@
           sequence: 0,
           city: '',
           slideUrl: '',
-          isLook: 0
+          isLook: 0,
+          position: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
@@ -268,9 +290,10 @@
         return calendarTypeKeyValue[type]
       }
     },
-    mounted(){
+    mounted() {
       this.getCityList(),
-      this.getQiniuToken()
+      this.getQiniuToken(),
+      this.getPositionList()
     },
     methods: {
       handleRemove(file, fileList) {
@@ -503,14 +526,21 @@
           }
         }))
       },
-      getCityList(cityName){
+      getPositionList() {
+        // let cityName = this.$route.query.city
+
+        fetchSlidePositionList().then(response => {
+          this.positionList = response.data.data;
+        })
+      },
+      getCityList() {
         // let cityName = this.$route.query.city
 
         cityList().then(response => {
           this.cityList = response.data.data;
         })
         this.city = cityName
-        this.getCountyList()
+        // this.getCountyList()
       },
 
       getCountyList(countyName){

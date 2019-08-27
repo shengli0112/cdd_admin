@@ -66,6 +66,16 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('slide/table/table'), name: '轮播图管理' }]
   },
   {
+    path: '/screen',
+    component: Layout,
+    redirect: '/screen/',
+    name: '开屏图管理',
+    icon: 'zujian',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('screen/table/table'), name: '开屏图管理' }]
+  },
+  {
     path: '/inform',
     component: Layout,
     redirect: '/inform/',

@@ -24,6 +24,13 @@ export function fetchSlideList(query) {
   });
 }
 
+export function fetchSlidePositionList() {
+  return fetch({
+    url: '/slide/slidePositionList',
+    method: 'get'
+  });
+}
+
 export function fetchPv1(pv) {
   return fetch({
     url: '/article_table/pv',

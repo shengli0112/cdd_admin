@@ -101,7 +101,7 @@
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="轮播图跳转链接">
+        <el-form-item label="跳转链接">
           <el-input v-model="temp.redirectUrl"></el-input>
         </el-form-item>
 
