@@ -25,9 +25,9 @@ export function fetchOpenScreenList(query) {
 }
 
 
-export function deleteOpenScreen(slideId) {
+export function deleteOpenScreen(openScreenId) {
   const data = {
-    slideId
+    openScreenId
   };
   return fetch({
     url: '/slide/deleteOpenScreen',
@@ -36,9 +36,9 @@ export function deleteOpenScreen(slideId) {
   });
 }
 
-export function recoverOpenScreen(slideId) {
+export function recoverOpenScreen(openScreenId) {
   const data = {
-    slideId
+    openScreenId
   };
   return fetch({
     url: '/slide/recoverOpenScreen',
