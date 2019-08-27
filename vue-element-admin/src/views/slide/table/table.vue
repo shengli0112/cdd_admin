@@ -118,7 +118,7 @@
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="轮播图跳转链接">
+        <el-form-item label="跳转链接">
           <el-input v-model="temp.redirectUrl"></el-input>
         </el-form-item>
 
@@ -146,8 +146,9 @@
 
         <el-form-item label="是否只有经纪人可看">
           <el-radio-group v-model="this.isLook">
-            <el-radio :label="1">是</el-radio>
             <el-radio :label="0">否</el-radio>
+            <el-radio :label="1">是</el-radio>
+
           </el-radio-group>
         </el-form-item>
 
@@ -529,20 +530,14 @@
         }))
       },
       getPositionList() {
-        // let cityName = this.$route.query.city
-
         fetchSlidePositionList().then(response => {
           this.positionList = response.data.data;
         })
       },
       getCityList() {
-        // let cityName = this.$route.query.city
-
         cityList().then(response => {
           this.cityList = response.data.data;
         })
-        this.city = cityName
-        // this.getCountyList()
       },
 
       getCountyList(countyName){
