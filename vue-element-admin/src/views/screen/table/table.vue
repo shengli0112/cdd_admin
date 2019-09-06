@@ -96,7 +96,7 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+      <el-form class="small-space" :model="temp" :rules="screenRules" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="标题">
           <el-input v-model="temp.title"></el-input>
         </el-form-item>
@@ -153,6 +153,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
+  import { validateURL } from 'utils/validate';
   import { fetchOpenScreenList, deleteOpenScreen, recoverOpenScreen, createOpenScreen, updateOpenScreen, cityList, countyList, townList } from 'api/screen_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
@@ -179,6 +180,20 @@
       waves
     },
     data() {
+      const validateUrl = (rule, value, callback) => {
+        if (!validateURL(value)) {
+          callback(new Error('请输入正确的合法路径'));
+        } else {
+          callback();
+        }
+      };
+      const validatePass = (rule, value, callback) => {
+        if (value.length < 6) {
+          callback(new Error('密码不能小于6位'));
+        } else {
+          callback();
+        }
+      };
       return {
         list: null,
         total: null,
