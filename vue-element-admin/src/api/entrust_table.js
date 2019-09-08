@@ -1,5 +1,13 @@
 import fetch from 'utils/fetch';
 
+export function exportEntrustList(query) {
+  return fetch({
+    url: '/entrust/exportEntrust',
+    method: 'get',
+    params: query
+  });
+}
+
 export function fetchEntrustList(query) {
   return fetch({
     url: '/entrust/findAdminEntrustList',

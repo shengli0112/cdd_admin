@@ -280,7 +280,8 @@
     cityList,
     countyList,
     townList,
-    updateEntrust
+    updateEntrust,
+    exportEntrustList
   } from 'api/entrust_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
@@ -611,8 +612,8 @@
           type: ''
         };
       },
-      exportHouse() {
-          exportHouseList(this.listQuery).then(response => {
+      exportEntrust() {
+          exportEntrustList(this.listQuery).then(response => {
               this.exportList = response.data.data;
           })
       },
