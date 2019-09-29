@@ -77,10 +77,10 @@
       getHouseCount() {
         fetchHouseCount().then(response => {
           this.statisticsData = response.data.data;
-          this.cfCount = this.statisticsData.cfCount;
-          this.tdCount = this.statisticsData.tdCount;
-          this.ckCount = this.statisticsData.ckCount;
-          this.entrustCount = this.statisticsData.entrustCount
+          this.cfCount = response.data.data.cfCount;
+          this.tdCount = response.data.data.tdCount;
+          this.ckCount = response.data.data.ckCount;
+          this.entrustCount = response.data.data.entrustCount
         })
       }
     }
