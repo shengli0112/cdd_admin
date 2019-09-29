@@ -145,7 +145,7 @@
         <el-form-item label="城市">
           <el-select v-model="temp.city" clearable filterable placeholder="请选择"
                      label-width="70px">
-            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
+            <el-option v-for="city in  cityList" :key="city" :label="city" :value="city">
             </el-option>
           </el-select>
 

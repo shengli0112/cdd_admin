@@ -92,7 +92,7 @@
 
   export default {
     name: 'dashboard-editor',
-    components: { panThumb, countTo, pieChart, lineChart, barChart, todoList, panelGroup, lineChart },
+    components: { panThumb, countTo, pieChart, lineChart, barChart, todoList, panelGroup },
     data() {
       return {
         statisticsData: null,

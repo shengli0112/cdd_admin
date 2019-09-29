@@ -62,9 +62,7 @@
 
       <el-table-column align="center" label="面积" width="90">
         <template scope="scope">
-          <span v-if="scope.row.entrustType=='土地'">{{scope.row.area}}亩</span>
-          <span v-if="scope.row.entrustType=='厂房'">{{scope.row.area}}㎡</span>
-          <span v-if="scope.row.entrustType=='仓库'">{{scope.row.area}}㎡</span>
+          <span>{{scope.row.area}}</span>
         </template>
       </el-table-column>
 

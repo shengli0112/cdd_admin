@@ -7,9 +7,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            New Visits
+            厂房
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="statisticsData.cfCount" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -20,9 +20,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Messages
+            土地
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="statisticsData.tdCount" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -33,9 +33,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Purchases
+            仓库
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="statisticsData.ckCount" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -58,12 +58,22 @@
 <script>
   import CountTo from 'vue-count-to'
   export default {
+    data() {
+      return {
+        statisticsData: null
+      }
+    },
     components: {
       CountTo
     },
     methods: {
       handleSetLineChartData(type) {
         this.$emit('handleSetLineChartData', type)
+      },
+      getHouseCount() {
+        fetchHouseCount().then(response => {
+          this.statisticsData = response.data.data;
+        })
       }
     }
   }
