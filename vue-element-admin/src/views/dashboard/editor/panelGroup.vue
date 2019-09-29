@@ -57,6 +57,9 @@
 
 <script>
   import CountTo from 'vue-count-to'
+  import {
+    fetchHouseCount
+  } from 'api/home';
   export default {
     data() {
       return {
