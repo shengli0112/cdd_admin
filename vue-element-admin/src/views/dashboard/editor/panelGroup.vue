@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             厂房
           </div>
-          <count-to :start-val="0" :end-val="statisticsData.cfCount" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="cfCount" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             土地
           </div>
-          <count-to :start-val="0" :end-val="statisticsData.tdCount" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="tdCount" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             仓库
           </div>
-          <count-to :start-val="0" :end-val="statisticsData.ckCount" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="ckCount" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -46,9 +46,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Shoppings
+            委托
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="entrustCount" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -60,7 +60,11 @@
   export default {
     data() {
       return {
-        statisticsData: null
+        statisticsData: null,
+        cfCount: '',
+        tdCount: '',
+        ckCount: '',
+        entrustCount: ''
       }
     },
     components: {
@@ -73,6 +77,10 @@
       getHouseCount() {
         fetchHouseCount().then(response => {
           this.statisticsData = response.data.data;
+          this.cfCount = this.statisticsData.cfCount;
+          this.tdCount = this.statisticsData.tdCount;
+          this.ckCount = this.statisticsData.ckCount;
+          this.entrustCount = this.statisticsData.entrustCount
         })
       }
     }
