@@ -70,6 +70,9 @@
     components: {
       CountTo
     },
+    mounted() {
+      this.getHouseCount()
+    },
     methods: {
       handleSetLineChartData(type) {
         this.$emit('handleSetLineChartData', type)

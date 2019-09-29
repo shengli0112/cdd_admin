@@ -123,9 +123,6 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px"
                style='width: 400px; margin-left:50px;'>
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
 
         <el-form-item label="标题">
           <el-input v-model="temp.title"></el-input>

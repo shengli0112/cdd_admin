@@ -135,7 +135,7 @@
 
         <el-form-item label="位置">
           <el-select v-model="temp.position" clearable filterable placeholder="请选择"
-                     label-width="70px">
+                   @change="selectPosition"  label-width="70px">
             <el-option v-for="position in  positionList" :key="position" :label="position" :value="position">
             </el-option>
           </el-select>
@@ -561,19 +561,21 @@
           this.townList = response.data.data;
         })
       },
-      selectCity(val){
-
+      selectPosition(val) {
+        this.temp.position = val
+      },
+      selectCity(val) {
         this.cityList = []
         this.countyList = []
         this.townList = []
         this.getCityList(val)
       },
-      selectCounty(val){
+      selectCounty(val) {
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
       },
-      selectTown(val){
+      selectTown(val) {
         this.townList = []
 
       },
