@@ -109,6 +109,12 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="创建时间" width="180">
+        <template scope="scope">
+          <span>{{scope.row.createTs}}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" label="状态" width="80">
         <template scope="scope">
           <span v-if="scope.row.status=='1'">可用</span>

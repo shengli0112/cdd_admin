@@ -60,10 +60,10 @@
         this.chart = echarts.init(this.$el, 'macarons')
         this.setOptions(this.chartData)
       },
-      setOptions({ expectedData, actualData } = {}) {
+      setOptions({ month, qiuzu, qiugou, chuzu, chushou  } = {}) {
         this.chart.setOption({
           xAxis: {
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: month,
             boundaryGap: false,
             axisTick: {
               show: false
@@ -89,10 +89,10 @@
             }
           },
           legend: {
-            data: ['expected', 'actual'] //'厂房', '土地', '仓库'
+            data: ['求租', '求购', '出租', '出售'] //'厂房', '土地', '仓库'
           },
           series: [{
-            name: 'expected', itemStyle: {
+            name: '求租', itemStyle: {
               normal: {
                 color: '#FF005A',
                 lineStyle: {
@@ -103,12 +103,12 @@
             },
             smooth: true,
             type: 'line',
-            data: expectedData,
+            data: qiuzu,
             animationDuration: 2800,
             animationEasing: 'cubicInOut'
           },
             {
-              name: 'actual',
+              name: '求购',
               smooth: true,
               type: 'line',
               itemStyle: {
@@ -123,19 +123,19 @@
                   }
                 }
               },
-              data: actualData,
+              data: qiugou,
               animationDuration: 2800,
               animationEasing: 'quadraticOut'
-            }/*,
+            },
             {
-              name: '仓库',
+              name: '出租',
               smooth: true,
               type: 'line',
               itemStyle: {
                 normal: {
-                  color: '#3888fa',
+                  color: '#777777',
                   lineStyle: {
-                    color: '#3888fa',
+                    color: '#777777',
                     width: 2
                   },
                   areaStyle: {
@@ -143,10 +143,30 @@
                   }
                 }
               },
-              data: actualData,
+              data: chuzu,
               animationDuration: 2800,
               animationEasing: 'quadraticOut'
-            }*/]
+            },
+            {
+              name: '出售',
+              smooth: true,
+              type: 'line',
+              itemStyle: {
+                normal: {
+                  color: '#f2a3d4',
+                  lineStyle: {
+                    color: '#f2a3d4',
+                    width: 2
+                  },
+                  areaStyle: {
+                    color: '#f3f8ff'
+                  }
+                }
+              },
+              data: chushou,
+              animationDuration: 2800,
+              animationEasing: 'quadraticOut'
+            }]
         })
       }
     }

@@ -7,3 +7,10 @@ export function fetchHouseCount() {
   });
 }
 
+export function fetchStatistics() {
+  return fetch({
+    url: '/statistics/monthStatistics',
+    method: 'get'
+  });
+}
+

@@ -56,6 +56,16 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('entrust/table/table'), name: '委托管理' }]
   },
   {
+    path: '/service',
+    component: Layout,
+    redirect: '/service/',
+    name: '企业服务',
+    icon: 'zujian',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('service/table/table'), name: '企业服务' }]
+  },
+  {
     path: '/slide',
     component: Layout,
     redirect: '/slide/',
