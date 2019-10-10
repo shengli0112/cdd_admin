@@ -288,12 +288,11 @@
   // eslint-disable-next-line no-unused-vars
   import {
     findAdminServiceList,
-    updateServiceInfo,
     deleteServiceInfo,
     cityList,
     countyList,
     townList
-  } from 'api/entrust_table';
+  } from 'api/service_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
