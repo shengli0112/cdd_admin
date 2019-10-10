@@ -496,7 +496,7 @@
       getList() {
         this.listLoading = true;
         findAdminServiceList(this.listQuery).then(response => {
-          this.list = response.data.data.entrustInfoList;
+          this.list = response.data.data.serviceInfoList;
           this.total = response.data.data.total;
           this.listLoading = false;
         })
