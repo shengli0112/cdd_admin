@@ -47,7 +47,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="手机号" width="65">
+      <el-table-column align="center" label="手机号" width="165">
         <template scope="scope">
           <span>{{scope.row.phone}}</span>
         </template>
@@ -60,39 +60,39 @@
       </el-table-column>
 
 
-      <el-table-column align="center" label="服务类型名" width="90">
+      <el-table-column align="center" label="服务类型名" width="190">
         <template scope="scope">
           <span>{{scope.row.serviceTypeName}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="市" width="50">
+      <el-table-column align="center" label="市" width="100">
         <template scope="scope">
           <span>{{scope.row.city}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="区/县" width="50">
+      <el-table-column align="center" label="区/县" width="100">
         <template scope="scope">
           <span>{{scope.row.county}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="镇" width="50">
+      <el-table-column align="center" label="镇" width="100">
         <template scope="scope">
           <span>{{scope.row.town}}</span>
         </template>
       </el-table-column>
 
 
-      <el-table-column align="center" label="推荐人" width="95">
+      <el-table-column align="center" label="推荐人" width="155">
         <template scope="scope">
           <span>{{scope.row.referrer}}</span>
           <!--        <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="推荐人手机号" width="130">
+      <el-table-column align="center" label="推荐人手机号" width="150">
         <template scope="scope">
           <span>{{scope.row.referrerPhone}}</span>
           <!--          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
@@ -105,7 +105,7 @@
 <!--        </template>-->
 <!--      </el-table-column>-->
 
-      <el-table-column align="center" label="创建时间" width="180">
+      <el-table-column align="center" label="创建时间" width="160">
         <template scope="scope">
           <span>{{scope.row.createTs}}</span>
         </template>
@@ -122,7 +122,7 @@
 
       <el-table-column align="center" label="操作" width="170">
         <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">修改</span>
+          <!--<span class="link-type" @click="handleUpdate(scope.row)">修改</span>-->
           <span v-if="scope.row.status=='1'" class="link-type" @click="handleDelete(scope.row)">删除</span>
           <!--<span v-if="scope.row.status=='0'" class="link-type" @click="handleRecover(scope.row)">恢复</span>-->
         </template>
@@ -142,8 +142,8 @@
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px"
                style='width: 400px; margin-left:50px;'>
 
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
+        <el-form-item label="联系人">
+          <el-input v-model="temp.username"></el-input>
         </el-form-item>
 
         <el-form-item label="区域">
@@ -338,32 +338,15 @@
         townList: null,
         temp: {
           id: undefined,
-          title: '',
-          type: '',
+          username: '',
+          phone: '',
+          serviceTypeName: '',
           city: '',
           county: '',
           town: '',
-          street: '',
-          houseNumber: '',
-          area: '',
-          sellingPrice: '',
-          electricity: '',
-          contacts: '',
-          phone: '',
-          houseType: '',
-          houseUseType: '',
-          floor: '',
-          fireControl: '',
-          background: '',
-          houseStatus: '',
-          coverArea: '',
-          houseEdge: '',
-          singlePrice: '',
-          useArea: '',
-          signContract: '',
-          description: '',
-          trade: '',
-          expireDate: ''
+          referrer: '',
+          referrerPhone: '',
+          description: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
