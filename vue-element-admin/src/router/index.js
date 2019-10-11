@@ -96,9 +96,9 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('inform/table/table'), name: '房源投诉' }]
   },
   {
-    path: '/admin',
+    path: '/examine',
     component: Layout,
-    redirect: '/user/',
+    redirect: '/examine/',
     name: '店长审核',
     icon: 'zonghe',
     meta: { role: ['admin'] },
