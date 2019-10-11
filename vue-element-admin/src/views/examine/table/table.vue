@@ -27,19 +27,19 @@
 
     <el-table :key='tableKey' :data="list"
               v-loading.body="listLoading" border fit highlight-current-row
-              style="width: 100%" :row-key="getRowKeys"
-              :expand-row-keys="userList"
-              @click="toggleRowExpansion"
+              style="width: 100%"
     >
 
-      <el-table-column type="expand" width="0px" label="扩展">
+      <!-- :row-key="getRowKeys"
+              :expand-row-keys="userList"
+              @current-change="toggleRowExpansion"<el-table-column type="expand" width="0px" label="扩展">
         <el-table :key='userTableKey' :data="userList" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
 
-          <!--<el-table-column align="center" label="序号" width="65">
+          &lt;!&ndash;<el-table-column align="center" label="序号" width="65">
             <template scope="props">
               <span>{{props.row.id}}</span>
             </template>
-          </el-table-column>-->
+          </el-table-column>&ndash;&gt;
 
           <el-table-column align="center" label="用户名" width="125">
             <template scope="props">
@@ -98,7 +98,7 @@
           </el-table-column>
 
         </el-table>
-      </el-table-column>
+      </el-table-column>-->
 
       <el-table-column min-width="80px" label="公司名">
         <template scope="scope">
@@ -157,7 +157,7 @@
     </el-table>
 
     <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
+      <el-pagination v-if="paginationShow" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page"
         :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total" :ref="pagination">
       </el-pagination>
     </div>
