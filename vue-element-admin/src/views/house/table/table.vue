@@ -719,7 +719,7 @@
         })
       },
       formatJson(filterVal, jsonData) {
-        return jsonData.map(v => filterVal.map(j => {
+        return (jsonData || []).map(v => filterVal.map(j => {
             return v[j]
         }))
       },
