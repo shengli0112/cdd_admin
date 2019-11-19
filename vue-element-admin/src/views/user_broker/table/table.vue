@@ -22,7 +22,7 @@
 
       <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
       <!--      <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加</el-button>-->
-      <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导入</el-button>
+      <el-button class="filter-item" type="primary" icon="document" @click="handleImport">导入用户资源</el-button>
       <!--      <el-checkbox class="filter-item" @change='tableKey=tableKey+1' v-model="showAuditor">显示审核人</el-checkbox>-->
     </div>
 
@@ -418,20 +418,13 @@
           }
         });
       },
-      handleCreate() {
-        addUserBroker(this.temp).then(response => {
-          if (response.data.flag === 1) {
-            this.$notify({
-              title: '成功',
-              message: '添加成功',
-              type: 'success',
-              duration: 2000
-            });
-            this.getList();
-          }
-        })
-
-        this.dialogFormVisible = false;
+      handleCreate(row) {
+        this.temp = Object.assign({}, row);
+        this.dialogStatus = 'create';
+        this.dialogFormVisible = true;
+      },
+      handleImport() {
+        this.dialogUploadVisible = true;
       },
       handleUpdate(row) {
         this.temp = Object.assign({}, row);
@@ -479,17 +472,19 @@
         })
       },
       create() {
-        this.temp.id = parseInt(Math.random() * 100) + 1024;
-        this.temp.timestamp = +new Date();
-        this.temp.author = '原创作者';
-        this.list.unshift(this.temp);
+        addUserBroker(this.temp).then(response => {
+          if (response.data.flag === 1) {
+            this.$notify({
+              title: '成功',
+              message: '添加成功',
+              type: 'success',
+              duration: 2000
+            });
+            this.getList();
+          }
+        })
+
         this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        });
       },
       update() {
         updateUserBroker(this.temp).then(response => {
