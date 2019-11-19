@@ -177,7 +177,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogUploadVisible = false">取 消</el-button>
-        <el-button v-else type="primary" @click="submitUpload">确 定</el-button>
+        <el-button type="primary" @click="submitUpload">确 定</el-button>
       </div>
     </el-dialog>
 
