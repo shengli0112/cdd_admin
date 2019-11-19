@@ -188,7 +188,6 @@
 <script>
   // eslint-disable-next-line no-unused-vars
   import {
-    importUserBrokerList,
     findUserBroker,
     updateUserBroker,
     cityList,
@@ -435,19 +434,9 @@
         this.dialogFormVisible = false;
       },
       handleUpdate(row) {
-        updateUserBroker(this.temp).then(response => {
-          if (response.data.flag === 1) {
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            });
-            this.getList();
-          }
-        })
-
-        this.dialogFormVisible = false;
+        this.temp = Object.assign({}, row);
+        this.dialogStatus = 'update';
+        this.dialogFormVisible = true;
       },
       handleRecover(row) {
         MessageBox.confirm('您确定恢复该信息么', '确定', {
@@ -503,11 +492,11 @@
         });
       },
       update() {
-        updateEntrust(this.temp).then(response => {
+        updateUserBroker(this.temp).then(response => {
           if (response.data.flag === 1) {
             this.$notify({
               title: '成功',
-              message: '删除成功',
+              message: '更新成功',
               type: 'success',
               duration: 2000
             });

@@ -297,19 +297,9 @@
         this.dialogFormVisible = true;
       },
       handleUpdate(row) {
-        updateUser(this.temp).then(response => {
-          if (response.data.flag === 1) {
-            this.$notify({
-              title: '成功',
-              message: '删除成功',
-              type: 'success',
-              duration: 2000
-            });
-            this.getList();
-          }
-        })
-
-        this.dialogFormVisible = false;
+        this.temp = Object.assign({}, row);
+        this.dialogStatus = 'update';
+        this.dialogFormVisible = true;
       },
       handleRecover(row) {
         MessageBox.confirm('您确定恢复该用户么', '确定', {
@@ -385,21 +375,19 @@
         });
       },
       update() {
-        this.temp.timestamp = +this.temp.timestamp;
-        for (const v of this.list) {
-          if (v.id === this.temp.id) {
-            const index = this.list.indexOf(v);
-            this.list.splice(index, 1, this.temp);
-            break;
+        updateUser(this.temp).then(response => {
+          if (response.data.flag === 1) {
+            this.$notify({
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
+              duration: 2000
+            });
+            this.getList();
           }
-        }
+        })
+
         this.dialogFormVisible = false;
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        });
       },
       resetTemp() {
         this.temp = {
