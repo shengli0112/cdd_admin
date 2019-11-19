@@ -588,6 +588,24 @@
             this.$message.error(res.data.message)
           }
         })
+      },
+      beforeUpload(file){
+        debugger
+        console.log(file,'文件');
+        this.files = file;
+        const extension = file.name.split('.')[1] === 'xls'
+        const extension2 = file.name.split('.')[1] === 'xlsx'
+        const isLt2M = file.size / 1024 / 1024 < 5
+        if (!extension && !extension2) {
+          this.$message.warning('上传模板只能是 xls、xlsx格式!')
+          return
+        }
+        if (!isLt2M) {
+          this.$message.warning('上传模板大小不能超过 5MB!')
+          return
+        }
+        this.fileName = file.name;
+        return false // 返回false不会自动上传
       }
     }
   }
