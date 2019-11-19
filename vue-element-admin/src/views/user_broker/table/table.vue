@@ -517,21 +517,6 @@
           type: ''
         };
       },
-      exportEntrust() {
-          exportEntrustList(this.listQuery).then(response => {
-              this.exportList = response.data.data;
-          })
-      },
-      handleDownload() {
-        this.exportHouse(),
-        require.ensure([], () => {
-          const { export_json_to_excel } = require('vendor/Export2Excel');
-          const tHeader = ['标题', '租售', '类型', '区域', '总面积', '使用面积', '楼层', '价格',  '联系人', '手机号', '创建时间'];
-          const filterVal = ['title', 'houseUseType', 'houseType', 'region', 'totalArea', 'useArea', 'floor', 'price', 'concacts', 'phone', 'createTs'];
-          const data = this.formatJson(filterVal, this.exportList);
-          export_json_to_excel(tHeader, data, '厂房数据');
-        })
-      },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => {
             return v[j]
