@@ -188,6 +188,7 @@
 <script>
   // eslint-disable-next-line no-unused-vars
   import {
+    importUserBrokerList,
     findUserBroker,
     updateUserBroker,
     cityList,
@@ -570,11 +571,11 @@
         let requestConfig = {
           headers: {
             'Content-Type': 'multipart/form-data'
-          },
+          }
         }
-        this.$http.post(`/account/userBroker/importUserBroker`, fileFormData, requestConfig).then((res) => {
+        importUserBrokerList(fileFormData, requestConfig).then(response => {
           debugger
-          if (res.data.flag === 1) {
+          if (response.data.flag === 1) {
             this.$message({
               message: '操作成功',
               type: 'success',
@@ -585,11 +586,11 @@
               }
             })
           } else {
-            this.$message.error(res.data.message)
+            this.$message.error(response.data.message)
           }
         })
       },
-      beforeUpload(file){
+      beforeUpload(file) {
         debugger
         console.log(file,'文件');
         this.files = file;

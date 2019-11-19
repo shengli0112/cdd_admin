@@ -1,10 +1,14 @@
 import fetch from 'utils/fetch';
 
-export function importUserBrokerList(query) {
+export function importUserBrokerList(fileFormData, requestConfig) {
+  const data = {
+    fileFormData,
+    requestConfig
+  };
   return fetch({
     url: '/userBroker/importUserBroker',
-    method: 'get',
-    params: query
+    method: 'post',
+    data
   });
 }
 
