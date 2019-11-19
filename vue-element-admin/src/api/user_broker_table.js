@@ -1,58 +1,60 @@
 import fetch from 'utils/fetch';
 
-export function fetchUserList(query) {
+export function importUserBrokerList(query) {
   return fetch({
-    url: '/account/userList',
+    url: '/userBroker/importUserBroker',
     method: 'get',
     params: query
   });
 }
 
-export function fetchExportUser(query) {
+export function findUserBroker(query) {
   return fetch({
-    url: '/account/exportUser',
+    url: '/userBroker/findUserBroker',
     method: 'get',
     params: query
   });
 }
 
-export function fetchPv1(pv) {
+
+export function updateUserBroker(data) {
   return fetch({
-    url: '/article_table/pv',
-    method: 'get',
-    params: { pv }
+    url: '/userBroker/updateUserBroker',
+    method: 'post',
+    data
   });
 }
 
-export function deleteUser(userId) {
+export function deleteUserBroker(userBrokerId) {
   const data = {
-    userId
+    userBrokerId
   };
   return fetch({
-    url: '/account/deleteUser',
+    url: '/userBroker/deleteUserBroker',
     method: 'post',
     data
   });
 }
 
-export function recoverUser(userId) {
+export function recoverUserBroker(userBrokerId) {
   const data = {
-    userId
+    userBrokerId
   };
   return fetch({
-    url: '/account/recoverUser',
+    url: '/userBroker/recoverUserBroker',
     method: 'post',
     data
   });
 }
 
-export function updateUser(data) {
+export function addUserBroker(data) {
   return fetch({
-    url: '/account/updateServiceArae',
+    url: '/userBroker/addUserBroker',
     method: 'post',
     data
   });
 }
+
 
 export function cityList() {
   return fetch({

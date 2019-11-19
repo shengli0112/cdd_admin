@@ -128,36 +128,22 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="类型">
-          <el-select class="filter-item" v-model="temp.type" placeholder="请选择">
-            <el-option v-for="item in  calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
+        <el-form-item label="区域">
+          <el-select class="filter-item" v-model="temp.city" clearable filterable placeholder="请选择" @change="selectCity"
+                     label-width="70px">
+            <el-option v-for="item in  cityList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
-        </el-form-item>
-
-        <el-form-item label="状态">
-          <el-select class="filter-item" v-model="temp.status" placeholder="请选择">
-            <el-option v-for="item in  statusOptions" :key="item" :label="item" :value="item">
+          <el-select class="filter-item" v-model="temp.county" clearable filterable placeholder="选择县/区"
+                     @change="selectCounty" label-width="70px">
+            <el-option v-for="item in  countyList" :key="item" :label="item" :value="item">
             </el-option>
           </el-select>
-        </el-form-item>
-
-        <el-form-item label="时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="选择日期时间">
-          </el-date-picker>
-        </el-form-item>
-
-        <el-form-item label="标题">
-          <el-input v-model="temp.title"></el-input>
-        </el-form-item>
-
-        <el-form-item label="重要性">
-          <el-rate style="margin-top:8px;" v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
-        </el-form-item>
-
-        <el-form-item label="点评">
-          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容" v-model="temp.remark">
-          </el-input>
+          <el-select class="filter-item" v-model="temp.town" learable filterable placeholder="选择镇" @change="selectTown"
+                     label-width="70px">
+            <el-option v-for="item in  townList" :key="item" :label="item" :value="item">
+            </el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -182,7 +168,7 @@
 
 <script>
   // eslint-disable-next-line no-unused-vars
-  import { fetchUserList, deleteUser, recoverUser, fetchExportUser } from 'api/user_table';
+  import { fetchUserList, deleteUser, recoverUser, fetchExportUser, updateUser, cityList, countyList, townList } from 'api/user_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
   import { MessageBox } from 'element-ui'
@@ -220,14 +206,14 @@
           type: undefined,
           sort: '+id'
         },
+        cityList: null,
+        countyList: null,
+        townList: null,
         temp: {
           id: undefined,
-          importance: 0,
-          remark: '',
-          timestamp: 0,
-          title: '',
-          type: '',
-          status: 'published'
+          city: '',
+          county: '',
+          town: ''
         },
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
@@ -260,6 +246,9 @@
       typeFilter(type) {
         return calendarTypeKeyValue[type]
       }
+    },
+    mounted() {
+      this.getCityList()
     },
     methods: {
       getList() {
@@ -308,9 +297,19 @@
         this.dialogFormVisible = true;
       },
       handleUpdate(row) {
-        this.temp = Object.assign({}, row);
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
+        updateUser(this.temp).then(response => {
+          if (response.data.flag === 1) {
+            this.$notify({
+              title: '成功',
+              message: '删除成功',
+              type: 'success',
+              duration: 2000
+            });
+            this.getList();
+          }
+        })
+
+        this.dialogFormVisible = false;
       },
       handleRecover(row) {
         MessageBox.confirm('您确定恢复该用户么', '确定', {
@@ -432,6 +431,47 @@
         return jsonData.map(v => filterVal.map(j => {
           return v[j]
         }))
+      },
+      getCityList(cityName) {
+        // let cityName = this.$route.query.city
+        this.temp.county = ''
+        this.temp.town = ''
+        cityList().then(response => {
+          this.cityList = response.data.data;
+        })
+        this.city = cityName
+        this.getCountyList()
+      },
+
+      getCountyList(countyName) {
+        // alert(this.city)
+        this.temp.town = ''
+        countyList(this.city).then(response => {
+          this.countyList = response.data.data;
+        })
+        this.county = countyName
+        this.getTownList()
+      },
+      getTownList() {
+        // alert(this.county)
+        townList(this.county).then(response => {
+          this.townList = response.data.data;
+        })
+      },
+      selectCity(val) {
+        this.cityList = []
+        this.countyList = []
+        this.townList = []
+        this.getCityList(val)
+      },
+      selectCounty(val) {
+        this.countyList = []
+        this.townList = []
+        this.getCountyList(val)
+      },
+      selectTown(val) {
+        this.townList = []
+        this.getTownList(val);
       }
     }
   }

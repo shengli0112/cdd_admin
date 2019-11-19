@@ -126,6 +126,16 @@ export const asyncRouterMap = [
     children: [{ path: 'table', component: _import('user/table/table'), name: '客源列表' }]
   },
   {
+    path: '/userBroker',
+    component: Layout,
+    redirect: '/userBroker/',
+    name: '用户资源管理',
+    icon: 'quanxian',
+    meta: { role: ['admin'] },
+    noDropdown: true,
+    children: [{ path: 'table', component: _import('user_broker/table/table'), name: '用户资源列表' }]
+  },
+  {
     path: '/enterprise',
     component: Layout,
     redirect: '/enterprise/',
