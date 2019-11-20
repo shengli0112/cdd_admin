@@ -297,8 +297,7 @@
       }
     },
     mounted() {
-      this.getCityList(),
-      this.getQiniuToken()
+      this.getCityList()
     },
     methods: {
       handleRemove(file, fileList) {
@@ -548,6 +547,7 @@
         this.cityList = []
         this.countyList = []
         this.townList = []
+        this.temp.city = val
         this.getCityList(val)
       },
       selectCounty(val) {
