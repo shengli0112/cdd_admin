@@ -249,6 +249,7 @@
           town: '',
           phone: ''
         },
+        fileName: '',
         importanceOptions: [1, 2, 3],
         calendarTypeOptions,
         sortOptions: [{ label: '按ID升序列', key: '+id' }, { label: '按ID降序', key: '-id' }],
