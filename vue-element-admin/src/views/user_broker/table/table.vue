@@ -419,8 +419,8 @@
           }
         });
       },
-      handleCreate(row) {
-        this.temp = Object.assign({}, row);
+      handleCreate() {
+        // this.temp = Object.assign({}, row);
         this.dialogStatus = 'create';
         this.dialogFormVisible = true;
       },
@@ -545,6 +545,7 @@
         })
       },
       selectCity(val) {
+        alert(val)
         this.cityList = []
         this.countyList = []
         this.townList = []
@@ -552,11 +553,13 @@
         this.getCityList(val)
       },
       selectCounty(val) {
+        alert(val)
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
       },
       selectTown(val) {
+        alert(val)
         this.townList = []
         this.getTownList(val);
       },
