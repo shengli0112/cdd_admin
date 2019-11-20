@@ -545,7 +545,7 @@
         })
       },
       selectCity(val) {
-        alert(val)
+        // alert(val)
         this.cityList = []
         this.countyList = []
         this.townList = []
@@ -553,13 +553,13 @@
         this.getCityList(val)
       },
       selectCounty(val) {
-        alert(val)
+        // alert(val)
         this.countyList = []
         this.townList = []
         this.getCountyList(val)
       },
       selectTown(val) {
-        alert(val)
+        // alert(val)
         this.townList = []
         this.getTownList(val);
       },
