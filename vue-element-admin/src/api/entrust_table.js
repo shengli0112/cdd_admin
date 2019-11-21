@@ -36,6 +36,18 @@ export function deleteEntrust(entrustId) {
   });
 }
 
+
+export function checkEntrust(entrustId) {
+  const data = {
+    entrustId
+  };
+  return fetch({
+    url: '/entrust/checkEntrust',
+    method: 'post',
+    data
+  });
+}
+
 export function recoverEntrust(entrustId) {
   const data = {
     entrustId

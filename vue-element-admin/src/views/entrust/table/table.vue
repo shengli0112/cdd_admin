@@ -110,6 +110,13 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" label="审核" width="70">
+        <template scope="scope">
+          <span v-if="scope.row.isUsed=='1'">已通过</span>
+          <span v-if="scope.row.isUsed=='2'" class="link-type" @click="handleCheck(scope.row)">通过</span>
+        </template>
+      </el-table-column>
+
     </el-table>
 
     <div v-show="!listLoading" class="pagination-container">
@@ -276,7 +283,8 @@
     countyList,
     townList,
     updateEntrust,
-    exportEntrustList
+    exportEntrustList,
+    checkEntrust
   } from 'api/entrust_table';
   import waves from '@/directive/waves.js';// 水波纹指令
   import { parseTime } from 'utils';
@@ -560,6 +568,26 @@
               this.$notify({
                 title: '成功',
                 message: '删除成功',
+                type: 'success',
+                duration: 2000
+              });
+              this.getList();
+            }
+          })
+        })
+      },
+      handleCheck(row) {
+        MessageBox.confirm('您确定通过该委托么', '确定通过', {
+          confirmButtonText: '确定通过',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          checkEntrust(row.entrustId).then(response => {
+            // this.flag = response.data.flag;
+            if (response.data.flag === 1) {
+              this.$notify({
+                title: '成功',
+                message: '成功',
                 type: 'success',
                 duration: 2000
               });
