@@ -37,9 +37,9 @@ export function deleteEntrust(entrustId) {
 }
 
 
-export function checkEntrust(entrustId) {
+export function checkEntrust(id) {
   const data = {
-    entrustId
+    id
   };
   return fetch({
     url: '/entrust/checkEntrust',
